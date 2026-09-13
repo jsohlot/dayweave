@@ -1,0 +1,29 @@
+.monthly-food{margin:18px 0;border:1px solid var(--line,#e3e7dd);border-radius:10px;background:var(--paper,#fffefa);color:var(--forest,#294e3e);overflow:hidden}
+.monthly-food>summary{display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;padding:17px 19px}
+.monthly-food>summary::-webkit-details-marker{display:none}
+.monthly-food-icon{display:grid;place-items:center;width:32px;height:32px;flex-shrink:0;border-radius:9px;background:#f4e5d9;color:#987454}
+.monthly-food summary strong{display:block;font-size:12px;font-weight:600}
+.monthly-food summary small{display:block;margin-top:5px;font-size:10px;color:#74816e;line-height:1.5}
+.monthly-food-toggle{margin-left:auto;font-size:19px;font-weight:400}
+.monthly-food[open] .monthly-food-toggle{transform:rotate(45deg)}
+.monthly-food-content{padding:0 19px 18px;border-top:1px solid #edf0e6}
+.monthly-food-content>p,.monthly-food-result p,.monthly-food-help,.monthly-food-mode{font-size:11px;line-height:1.75;color:#6e7c66;margin-top:13px}
+.monthly-food-example{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:16px 0}
+.monthly-food-example .text-button{font-size:10px}
+.monthly-food-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 12px;margin-top:15px}
+.monthly-food-fields label{display:flex;flex-direction:column;gap:7px;font-size:10px;font-weight:500;color:#5e7056;line-height:1.5}
+.monthly-food-fields input,.monthly-food-fields select{border:1px solid #dce4d1;border-radius:7px;padding:10px;color:#516546;background:#fafbf4;font-size:12px;width:100%;min-width:0}
+.monthly-food-fields input:focus,.monthly-food-fields select:focus{outline:2px solid #dbe6cf;outline-offset:1px;border-color:#8da67a}
+.monthly-food-content .monthly-food-mode{border-left:2px solid #d3dcc6;padding-left:10px}
+.monthly-food-sharing{display:flex;align-items:flex-start;gap:9px;font-size:11px;line-height:1.6;margin:15px 0;color:#5e7056;cursor:pointer}
+.monthly-food-sharing input{accent-color:#294e3e;margin:3px 0 0;flex-shrink:0}
+.monthly-food-content .monthly-food-fiction,.monthly-food-content .monthly-food-error{background:#f8f1e4;border:1px solid #e8dcc5;border-radius:7px;padding:11px 12px;color:#806446}
+.monthly-food-result{margin-top:17px;border:1px solid #dbe4cf;border-radius:8px;padding:16px;background:#f3f7ed}
+.monthly-food-result h3{font-size:13px;font-weight:600;overflow-wrap:anywhere}
+.monthly-food-result p{margin-top:9px;font-size:10px}
+.monthly-food-totals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:17px 0}
+.monthly-food-totals strong{display:block;font-family:'Manrope',sans-serif;font-size:24px;letter-spacing:-.7px;font-weight:550;overflow-wrap:anywhere}
+.monthly-food-totals span{display:block;margin-top:6px;font-size:10px;line-height:1.6;color:#6e7c66}
+.monthly-food-result .monthly-food-target{border-top:1px solid #dbe4cf;padding-top:11px}
+.monthly-food-content .monthly-food-limits{font-size:10px;margin-top:15px}
+@media(max-width:480px){.monthly-food-fields{grid-template-columns:1fr}.monthly-food>summary{padding:15px}.monthly-food-content{padding:0 15px 15px}.monthly-food-totals strong{font-size:22px}}
