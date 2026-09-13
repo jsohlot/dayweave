@@ -36,4 +36,4 @@ This is planning software, not a validated predictor of health or nutritional ne
 
 ## Hackathon entry
 
-Built for the [Multi-App AI Agent Hackathon](https://multiappagenthackathon.com/), September 13, 2026. The official deadline is 4:00 PM Pacific. The [submission form](https://docs.google.com/forms/d/e/1FAIpQLSclU5z63xMUenxypmW_PTcgXIGgwnENY_mgX87mPeoAWOTIoA/viewform) requests team email addresses and the repository URL. The README links the app, demonstration, setup, and reliability evidence. Submission confirmation is recorded separately after the form accepts the entry.
+Built for the [Multi-App AI Agent Hackathon](https://multiappagenthackathon.com/), September 13, 2026. The official deadline is 4:00 PM Pacific. The [submission form](https://docs.google.com/forms/d/e/1FAIpQLSclU5z63xMUenxypmW_PTcgXIGgwnENY_mgX87mPeoAWOTIoA/viewform) requests team email addresses and the repository URL. The README links the app, demonstration, setup, and reliability evidence. The solo-project entry was submitted at approximately 12:24 PM Pacific and the form confirmed: “Your response has been recorded.”

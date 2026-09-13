@@ -18,11 +18,11 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 
 ## Publication and video
 
-- **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34776937654) both passed.
+- **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34777473525) both passed.
 - **Hosted Google connection:** public-site OAuth succeeded and the app read the owner’s Gmail and primary Calendar. The privacy-policy link was visible in consent.
 - **Responsive browser checks:** desktop 1440px and mobile 390px inspected; the 390px layout had no horizontal overflow.
-- **Video:** 106.02 seconds, 1920×1080, H.264/AAC; full export decode passed. Root inspected the rendered scenes and enlarged evidence panels. It is an edited walkthrough of actual app screenshots with synthetic narration, with modes labeled. Public playback is verified after deployment.
-- **Submission:** the organizer form is available and the entry is being prepared; confirmation is recorded only after submission.
+- **Video:** 106.02 seconds, 1920×1080, H.264/AAC; full export decode passed. Root inspected the rendered scenes and enlarged evidence panels. It is an edited walkthrough of actual app screenshots with synthetic narration, with modes labeled. Public playback was verified: the hosted player loaded the 106.021-second video, advanced past 13 seconds, and reported no media error. Anonymous HTTP returned 200 with video/mp4.
+- **Submission:** the organizer Google Form accepted the solo-project entry at approximately 12:24 PM Pacific on September 13, 2026 and displayed “Your response has been recorded.” The submitted repository revision was `ff53f4354e73578c20e64d66641c3d88302b9990`; later documentation updates do not alter the demonstrated app.
 
 ## Evaluation boundaries
 
