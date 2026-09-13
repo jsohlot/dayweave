@@ -9,7 +9,15 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - The new **84.09-second continuous screen recording** replaces the edited screenshot demo. All 513 captured frames use their original timestamps, with no video cuts or speed changes. One continuous synthetic narration track and 23 captions accompany the actual app interactions. Full-file decode passed.
 - Recording: source explanations, a successful Gemini run over synthetic data, chosen food goal, familiar merchant ideas, conditional monthly rice estimates, exact-action approval, and a retry retaining one activity row. It contains no private Google data. The video was captured from clean build `6de8f84`; the later recovery and late-wake fixes do not change its normal-day flow.
 - MP4 SHA-256: `8247063ab126d77e9d3bd94db772803a8642fbad1567ca749b6ddb03d55876bc`.
-- A separate fresh judge-style checkout of the feature candidate passed installation, 114 tests, build, full dependency audit, 21 local links, 11 built resources, and 18 public URL checks. Final release/deployment checks are recorded separately below once completed.
+- A separate fresh judge-style checkout of the feature candidate passed installation, 114 tests, build, full dependency audit, 21 local links, 11 built resources, and 18 public URL checks. The final clean-environment and browser results are recorded below; release-specific CI runs are linked there.
+
+## Final clean environment and browser checks
+
+Final code/media candidate `c3a90feade808f14c33f0228ee7c73c1a5cfa682` was cloned again into a new directory with a fresh dependency cache. Installation, **128 tests across 10 files**, the production build, and the full dependency audit passed (zero vulnerabilities). All 21 local links and 11 built resources existed. Video and caption bytes in the clean build matched source; all 23 captions had valid ordered timing. The MP4 player reports 84.100 seconds, consistent with the 84.092-second capture timeline.
+
+The final production build was also opened as a new browser workspace without credentials. Full-day, early-start, and fresh-start scenarios worked; missing history remained labeled. The monthly example computed 8,000 g household carbohydrate over the period and 133.3 g per person per day, and a plan change cleared its inputs. A native keyboard time-field check confirmed that waking at 2 PM moves lunch to 2 PM. Exact approval produced one sample event/activity record. At 390 px, document width and scroll width both measured 390 px. No browser console errors or warnings were recorded during these checks.
+
+The final video played through to its end in the browser without a media error. Its captions were visually inspected at the food, calculation, approval, and activity scenes. Publication is gated by the [Verify and publish workflow](https://github.com/jsohlot/dayweave/actions/workflows/pages.yml), which repeats installation, testing, and building on a fresh Ubuntu runner before deploying Pages. Public links are rechecked by the coordinator after deployment.
 
 ## Earlier submitted release checks
 
