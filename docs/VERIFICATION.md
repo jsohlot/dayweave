@@ -18,7 +18,7 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 
 ## Publication and video
 
-- **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34777473525) both passed.
+- **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34778472927) both passed.
 - **Hosted Google connection:** public-site OAuth succeeded and the app read the owner’s Gmail and primary Calendar. The privacy-policy link was visible in consent.
 - **Responsive browser checks:** desktop 1440px and mobile 390px inspected; the 390px layout had no horizontal overflow.
 - **Video revision:** 101.08 seconds, 1920×1080, H.264/AAC, with one continuous synthetic narration track and 29 aligned captions. Full export decode and local browser playback passed. The ten app captures remain mode-labeled; an eleventh card clearly identifies wearable integration as planned and not connected. The previous 106.02-second publication was also verified, and is superseded by this revision.
@@ -37,6 +37,13 @@ The revised video release was checked from a separate fresh checkout on Septembe
 - A real Gemini run on synthetic early-start data succeeded and the UI displayed `Gemini AI used`. Google account data was not used for this AI check.
 - The 390px viewport had no horizontal overflow; browser console checks found no errors or warnings during the scenario checks.
 - Tracked source and production text assets passed a credential-pattern scan. The published MP4 matches the reviewed revision, SHA-256 `76a0b202f81eed96310b36a32cf216bcc43e71a2651eb867578ccb2d15021fec`.
+
+### Post-deployment checks
+
+- [Video-release CI and Pages deployment](https://github.com/jsohlot/dayweave/actions/runs/34778472927) passed for `42c054ff173dc9126fce67904b5b35a81748d5bb` on a fresh Ubuntu runner.
+- Anonymous requests returned HTTP 200 for the app, demo player, MP4, captions, privacy page, and setup guide. The hosted MP4 hash matches the reviewed 101.08-second revision above. Published JavaScript and CSS are byte-for-byte identical to the tested clean production build.
+- Reconnected the authorized test account on the public site; live Gmail and Calendar data loaded successfully. Retried the existing September 14 lunch action: the provider returned `Already present in your primary calendar` and saved its Sheets activity row. Repeating approval again left exactly one activity row; no additional Calendar event was created.
+- The hosted player loaded the revised 101.08-second video without a media error. Browser playback was checked after deployment.
 
 The fresh checkout verifies installation and the demo/AI workflow. Live Google authorization and write/retry checks are the separate executed checks above; app source code is unchanged by the video release. GitHub Actions also installs, tests, builds, and deploys on a fresh Ubuntu runner for each main-branch publication.
 
