@@ -17,6 +17,7 @@ export interface ActivityRow { actionId: string; date: string; title: string; st
 export interface Provider {
   mode: Mode;
   getConnections(): AppConnection[];
+  getAccountId?(): string | undefined;
   loadSources(date: string, preferences: Preferences, onTrace?: (entry: TraceEntry) => void): Promise<SourceData>;
   readPreferences(): Promise<Partial<Preferences> | null>;
   savePreferences(preferences: Preferences): Promise<void>;

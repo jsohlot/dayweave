@@ -48,13 +48,26 @@ export default function App() {
  useEffect(() => { if (panel === 'connect' && provider.mode === 'demo') void loadGoogleIdentity().catch(() => setNotice('Google sign-in could not preload. Check your connection and retry Connect Google.')); }, [panel, provider]);
  async function connect() {
   setBusy(true); setError(''); setNotice('');
+  const previousAccount = provider.getAccountId?.();
   let connected: Provider | undefined;
   try {
-   connected = await connectGoogle(clientId.trim()); provider.disconnect(); setConsent(false); setProvider(connected); setPlan(null); setActivity([]); setSelected([]); setResults([]);
-   let nextPreferences = { ...DEFAULT_PREFERENCES }; setPreferences(nextPreferences); let preferenceWarning = '';
-   try { const saved = await connected.readPreferences(); if (saved) { nextPreferences = { ...DEFAULT_PREFERENCES, ...saved }; setPreferences(nextPreferences); } } catch (e) { preferenceWarning = `Google connected. Saved preferences could not load: ${errorText(e)}`; }
-   const nextDate = nextPreferences.timeZone === preferences.timeZone ? date : tomorrowDate(nextPreferences.timeZone); setDate(nextDate); setPanel(null); await build(connected, nextDate, nextPreferences, false); if (preferenceWarning) setNotice(preferenceWarning);
-  } catch (e) { setError(errorText(e)); setBusy(false); }
+   connected = await connectGoogle(clientId.trim());
+   let nextPreferences = { ...DEFAULT_PREFERENCES }; let preferenceWarning = '';
+   try { const saved = await connected.readPreferences(); if (saved) nextPreferences = { ...DEFAULT_PREFERENCES, ...saved }; } catch (e) { preferenceWarning = `Google connected. Saved preferences could not load: ${errorText(e)}`; }
+   const nextAccount = connected.getAccountId?.();
+   if (connected.getAccountId && !nextAccount) throw new Error('Could not verify the Google account. Your current plan is unchanged; reconnect again.');
+   const sameAccount = provider.mode === 'live' && !!previousAccount && previousAccount === nextAccount;
+   provider.disconnect(); setProvider(connected); setConsent(false); setReview(false); setPanel(null);
+   if (sameAccount) {
+    setNotice('Reconnected to the same Google account. Review any unfinished actions again before retrying.');
+    return;
+   }
+   if (provider.mode === 'live') setApiKey('');
+   setPlan(null); setActivity([]); setSelected([]); setResults([]); setPreferences(nextPreferences);
+   const nextDate = provider.mode === 'live' || nextPreferences.timeZone !== preferences.timeZone ? tomorrowDate(nextPreferences.timeZone) : date;
+   setDate(nextDate); await build(connected, nextDate, nextPreferences, false); if (preferenceWarning) setNotice(preferenceWarning);
+  } catch (e) { connected?.disconnect(); setError(errorText(e)); }
+  finally { setBusy(false); }
  }
  function useDemo(nextScenario = scenario) {
   provider.disconnect(); const nextPreferences = { ...DEFAULT_PREFERENCES }; const nextDate = tomorrowDate(nextPreferences.timeZone); setPreferences(nextPreferences); setDate(nextDate); const next = createDemoProvider(nextScenario); setProvider(next); setScenario(nextScenario); setActivity([]); setApiKey(''); setConsent(false); setPanel(null); void build(next, nextDate, nextPreferences, false);
@@ -114,7 +127,7 @@ export default function App() {
   {panel === 'settings' && <PreferencesPanel preferences={preferences} mode={provider.mode} busy={totalBusy} onClose={() => setPanel(null)} onUse={value => { const nextDate = value.timeZone === preferences.timeZone ? date : tomorrowDate(value.timeZone); setDate(nextDate); setPreferences(value); setPanel(null); void build(provider, nextDate, value); }} onSave={async value => { setBusy(true); try { await provider.savePreferences(value); } finally { setBusy(false); } }}/>}
   {panel === 'connect' && <Modal title="Bring your day together." onClose={() => setPanel(null)} busy={totalBusy}>
    <p className="muted">Connect Gmail, Calendar and Sheets to make a plan from your own day. Google access and the optional AI key stay in this browser’s memory.</p>
-   {provider.mode === 'live' ? <div className="connected-notice"><ShieldCheck size={20}/><div><strong>Your Google account is connected</strong><p>Each app’s current status is shown in the sidebar.</p><button className="text-button" disabled={totalBusy} onClick={() => useDemo()}><LogOut size={14}/>Disconnect & return to demo</button></div></div> : <><label className="field">Google OAuth client ID<input value={clientId} onChange={e => setClientId(e.target.value)} autoComplete="off" placeholder="…apps.googleusercontent.com"/></label><p className="tiny">A public Web application client ID from your Google Cloud project. Enable Gmail, Calendar, Sheets and Drive APIs and allow this site’s origin. <a href={`${import.meta.env.BASE_URL}setup.html`} target="_blank" rel="noreferrer">Setup guide ↗</a></p><button className="button google-button" disabled={totalBusy || !clientId.trim()} onClick={() => void connect()}>{busy ? <LoaderCircle className="spinning" size={18}/> : <span className="google-g">G</span>}Connect Google</button></>}
+   {provider.mode === 'live' ? <div className="connected-notice"><ShieldCheck size={20}/><div><strong>Your Google account is connected</strong><p>Each app’s current status is shown in the sidebar.</p><button className="text-button" disabled={totalBusy} onClick={() => void connect()}>Reconnect Google</button><button className="text-button" disabled={totalBusy} onClick={() => useDemo()}><LogOut size={14}/>Disconnect & return to demo</button></div></div> : <><label className="field">Google OAuth client ID<input value={clientId} onChange={e => setClientId(e.target.value)} autoComplete="off" placeholder="…apps.googleusercontent.com"/></label><p className="tiny">A public Web application client ID from your Google Cloud project. Enable Gmail, Calendar, Sheets and Drive APIs and allow this site’s origin. <a href={`${import.meta.env.BASE_URL}setup.html`} target="_blank" rel="noreferrer">Setup guide ↗</a></p><button className="button google-button" disabled={totalBusy || !clientId.trim()} onClick={() => void connect()}>{busy ? <LoaderCircle className="spinning" size={18}/> : <span className="google-g">G</span>}Connect Google</button></>}
    <div className="setup-divider"/><div className="section-heading"><h3>A little help from Gemini</h3><span className="optional">Optional</span></div><p className="tiny">Without an AI key, the app still creates an evidence-based plan using scheduling rules.</p><label className="field">Gemini API key<input type="password" autoComplete="off" value={apiKey} onChange={e => { setApiKey(e.target.value); setConsent(false); }} placeholder="Enter a key for this session only"/></label>
    <label className="consent"><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} disabled={!apiKey.trim()}/><span>I agree to send minimized calendar commitments, receipt observations and routine preferences to Google Gemini when generating a plan. Raw email bodies are not sent. I can clear the key to stop future requests.</span></label>
    <div className="modal-actions"><button className="button secondary" onClick={() => { setApiKey(''); setConsent(false); }} disabled={totalBusy || !apiKey}>Clear AI key</button><button className="button primary" disabled={totalBusy} onClick={() => { setPanel(null); void build(); }}>Generate {provider.mode === 'demo' ? 'demo' : 'live'} plan<ArrowRight size={16}/></button></div>

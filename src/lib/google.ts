@@ -137,6 +137,7 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
   let identityPromise: Promise<string> | undefined;
   let spreadsheetId: string | undefined;
   let accountEmail: string | undefined;
+  let accountId: string | undefined;
   const connections: AppConnection[] = (['gmail','calendar','sheets'] as AppName[]).map(app => ({app,connected:!!token,detail:app === 'calendar' ? 'Primary calendar' : app === 'sheets' ? 'Dayweave workbook only' : 'Receipt emails, last 30 days'}));
   function assertConnected() {
     if (!token || Date.now() >= expiresAt) { token = ''; connections.forEach(c => {c.connected = false; c.detail = 'Reconnect Google';}); throw new GoogleError('Google connection expired or disconnected. Reconnect Google to continue.',401); }
@@ -157,7 +158,7 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
   }
   function identity(): Promise<string> {
     assertConnected();
-    if (!identityPromise) identityPromise = request<{sub?:string;email?:string}>('https://openidconnect.googleapis.com/v1/userinfo').then(result => { if (!result.sub) throw new Error('Could not verify Google account identity. Reconnect Google.');accountEmail=result.email;return result.sub; }).catch(error => {identityPromise = undefined;throw error;});
+    if (!identityPromise) identityPromise = request<{sub?:string;email?:string}>('https://openidconnect.googleapis.com/v1/userinfo').then(result => { if (!result.sub) throw new Error('Could not verify Google account identity. Reconnect Google.');accountEmail=result.email;accountId=result.sub;return result.sub; }).catch(error => {identityPromise = undefined;throw error;});
     return identityPromise;
   }
   const sheetKey = (subject: string) => `dayweave:google:${subject}:spreadsheet`;
@@ -277,6 +278,7 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
   }
   return {
     mode:'live',
+    getAccountId: () => accountId,
     getConnections: () => { if (Date.now() >= expiresAt) {token='';connections.forEach(c => {c.connected=false;c.detail='Reconnect Google';});}return connections.map(connection => ({...connection})); },
     async loadSources(date,preferences,onTrace) {
       const day = DateTime.fromISO(date,{zone:preferences.timeZone}).startOf('day');
@@ -320,6 +322,6 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
     },
     getActivity,
     getSpreadsheetUrl: () => spreadsheetId ? `https://docs.google.com/spreadsheets/d/${encodeURIComponent(spreadsheetId)}/edit` : undefined,
-    disconnect() {token = '';spreadsheetId = undefined;identityPromise = undefined;accountEmail = undefined;connections.forEach(c => {c.connected=false;c.detail='Disconnected';});},
+    disconnect() {token = '';spreadsheetId = undefined;identityPromise = undefined;accountEmail = undefined;accountId = undefined;connections.forEach(c => {c.connected=false;c.detail='Disconnected';});},
   };
 }

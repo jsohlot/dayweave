@@ -12,7 +12,7 @@ vi.mock('../lib/agent', async importOriginal => {
  const original = await importOriginal<typeof import('../lib/agent')>();
  return { generatePlan: (options: GenerateOptions) => { harness.generation(options); return original.generatePlan({ ...options, apiKey: undefined }); } };
 });
-vi.mock('../lib/google', () => ({ connectGoogle: async () => harness.live, loadGoogleIdentity: async () => {} }));
+vi.mock('../lib/google', () => ({ connectGoogle: async () => { if (!harness.live) throw new Error('Google sign-in was closed.'); return harness.live; }, loadGoogleIdentity: async () => {} }));
 beforeEach(() => { harness.generation.mockClear(); harness.providers.length = 0; harness.live = null; });
 afterEach(cleanup);
 async function ready() { await screen.findByRole('button', { name: 'Review & add' }); }
@@ -92,4 +92,76 @@ it('keeps food ideas opt-in, renders evidence after choosing a goal, and never s
  expect(screen.getByRole('link', { name: /Chipotle menu/i })).toBeTruthy();
  expect(harness.providers.at(-1)?.savePreferences).not.toHaveBeenCalled();
  expect(harness.providers.at(-1)?.applyActions).not.toHaveBeenCalled();
+});
+
+async function liveProvider(subject: string, name = 'Saved Account') {
+ const { createDemoProvider } = await vi.importActual<typeof import('../lib/demo')>('../lib/demo');
+ const live = createDemoProvider(); live.mode = 'live';
+ Object.assign(live, { getAccountId: () => subject });
+ live.readPreferences = vi.fn(async () => ({ name }));
+ vi.spyOn(live, 'applyActions');
+ return live;
+}
+async function connectLive(live: Provider) {
+ harness.live = live; render(<App/>); await ready();
+ fireEvent.click(screen.getByRole('button', { name: 'Make it yours' }));
+ fireEvent.change(screen.getByLabelText('Google OAuth client ID'), { target: { value: 'public.apps.googleusercontent.com' } });
+ fireEvent.click(screen.getByRole('button', { name: /Connect Google/ }));
+ await screen.findByText('Live Google account'); await ready();
+}
+it('reconnects the same account without losing an unfinished approved plan or unsaved routines', async () => {
+ const old = await liveProvider('account-a');
+ vi.mocked(old.applyActions).mockImplementation(async (plan, ids) => ids.map(actionId => ({ actionId, status: 'created', eventId: `event-${actionId}`, logged: false, message: 'Google connection expired. Reconnect Google.' })));
+ await connectLive(old);
+ fireEvent.change(screen.getByLabelText('Plan date'), { target: { value: '2026-09-20' } }); await ready();
+ fireEvent.click(screen.getByRole('button', { name: 'Your routines' }));
+ fireEvent.change(screen.getByLabelText('Your name'), { target: { value: 'Unsaved Account A' } });
+ fireEvent.click(screen.getByRole('button', { name: 'Use for this plan' })); await ready();
+ fireEvent.click(screen.getAllByRole('checkbox')[0]);
+ fireEvent.click(screen.getByRole('button', { name: 'Review & add' }));
+ fireEvent.click(screen.getByRole('button', { name: /Confirm & add/ }));
+ await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+ const [originalPlan, originalIds] = vi.mocked(old.applyActions).mock.calls[0];
+ const generationCount = harness.generation.mock.calls.length;
+ const fresh = await liveProvider('account-a', 'Old saved name'); harness.live = fresh;
+ fireEvent.click(screen.getByRole('button', { name: 'Connection' }));
+ fireEvent.click(screen.getByRole('button', { name: 'Reconnect Google' }));
+ await screen.findByText(/Reconnected.*Review/i);
+ expect(screen.getByText('Unsaved Account A')).toBeTruthy();
+ expect((screen.getByLabelText('Plan date') as HTMLInputElement).value).toBe('2026-09-20');
+ expect(harness.generation).toHaveBeenCalledTimes(generationCount);
+ expect(fresh.applyActions).not.toHaveBeenCalled();
+ fireEvent.click(screen.getByRole('button', { name: 'Review & add' }));
+ expect(fresh.applyActions).not.toHaveBeenCalled();
+ fireEvent.click(screen.getByRole('button', { name: /Confirm & add/ }));
+ await waitFor(() => expect(fresh.applyActions).toHaveBeenCalledTimes(1));
+ expect(vi.mocked(fresh.applyActions).mock.calls[0][0].actions).toEqual(originalPlan.actions);
+ expect(vi.mocked(fresh.applyActions).mock.calls[0][1]).toEqual(originalIds);
+});
+it('keeps the original plan when reconnect authorization fails', async () => {
+ await connectLive(await liveProvider('account-a', 'Original Account'));
+ const generationCount = harness.generation.mock.calls.length;
+ harness.live = null;
+ fireEvent.click(screen.getByRole('button', { name: 'Connection' }));
+ fireEvent.click(screen.getByRole('button', { name: 'Reconnect Google' }));
+ await screen.findAllByText('Google sign-in was closed.');
+ expect(screen.getByText('Original Account')).toBeTruthy();
+ expect(harness.generation).toHaveBeenCalledTimes(generationCount);
+ fireEvent.click(screen.getByRole('button', { name: 'Close dialog' }));
+ expect(screen.getByRole('button', { name: 'Review & add' })).toBeTruthy();
+});
+it('clears account data and AI consent when reconnect selects a different account', async () => {
+ await connectLive(await liveProvider('account-a', 'Private Account A'));
+ fireEvent.click(screen.getByRole('button', { name: 'Connection' }));
+ fireEvent.change(screen.getByLabelText('Gemini API key'), { target: { value: 'account-a-key' } });
+ fireEvent.click(within(screen.getByRole('dialog')).getByRole('checkbox'));
+ harness.live = await liveProvider('account-b', 'Account B');
+ fireEvent.click(screen.getByRole('button', { name: 'Reconnect Google' }));
+ await screen.findByText('Account B'); await ready();
+ expect(screen.queryByText('Private Account A')).toBeNull();
+ expect(harness.generation.mock.lastCall?.[0].apiKey).toBeUndefined();
+ expect(harness.generation.mock.lastCall?.[0].preferences.name).toBe('Account B');
+ fireEvent.click(screen.getByRole('button', { name: 'Connection' }));
+ expect((screen.getByLabelText('Gemini API key') as HTMLInputElement).value).toBe('');
+ expect((within(screen.getByRole('dialog')).getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
 });

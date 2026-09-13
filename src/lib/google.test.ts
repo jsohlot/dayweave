@@ -315,3 +315,15 @@ describe('food routine read and persistence boundaries', () => {
   expect(query).toMatch(/costco/); expect(query).toMatch(/chipotle/);
  });
 });
+
+it('exposes only the verified cached account subject through token expiry', async () => {
+ const provider = createGoogleProvider('test-memory-token');
+ expect(provider.getAccountId?.()).toBeUndefined();
+ await provider.readPreferences();
+ expect(provider.getAccountId?.()).toBe('synthetic-account-a');
+ expired = true;
+ await expect(provider.loadSources(plan.date, preferences)).rejects.toThrow(/expired/i);
+ expect(provider.getAccountId?.()).toBe('synthetic-account-a');
+ provider.disconnect();
+ expect(provider.getAccountId?.()).toBeUndefined();
+});
