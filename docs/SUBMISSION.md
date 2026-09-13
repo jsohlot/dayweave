@@ -2,7 +2,7 @@
 
 **A day-ahead planning agent that makes room for rest, coffee, and lunch—with evidence you can inspect and changes you approve.**
 
-[Working app](https://jsohlot.github.io/dayweave/) · [101-second demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
+[Working app](https://jsohlot.github.io/dayweave/) · [84-second continuous demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
 
 ## Problem and value
 
@@ -22,9 +22,9 @@ Dayweave combines those clues into tomorrow’s plan. It works backward from a c
 
 The Gemini agent uses a bounded read-only tool loop to inspect the validated plan and relevant observations, then selects a focus with supporting evidence IDs. The app validates the selection. Deterministic scheduling owns times, time zones, conflicts, and mutations. A separate approval dialog lists Calendar events and Sheets writes before execution.
 
-The provider checks availability again before insertion, uses stable event IDs for retries, and reconciles existing events before logging. Uncertain workbook creation can recover without creating a second workbook. Errors and incomplete logging remain visible. Model output cannot call mutation tools or replace the validated schedule. Credentials stay in page memory.
+The provider checks availability again before insertion, uses stable event IDs for retries, and reconciles existing events before logging. Uncertain workbook creation searches for the original workbook. If it remains missing, replacement requires explicit confirmation with a warning about possible late discovery. Same-account reconnection preserves unfinished actions for renewed review. Errors and incomplete logging remain visible. Model output cannot call mutation tools or replace the validated schedule. Credentials stay in page memory.
 
-**Executed evidence:** 69 automated tests passed, production build and hosted CI passed, and a separate reviewer verified the principal recovery and isolation fixes. Real Google tests covered Gmail and Calendar reads, Sheets preference saving, a Calendar lunch event with an activity row, and repeated approval without duplicate event or log creation. Real Gemini requests succeeded on synthetic inputs. The video shows a fictional walkthrough and a separately labeled live Google result; its measured duration is 101.08 seconds. The closing card describes a planned wearable extension, which is not connected.
+**Executed evidence:** 128 automated tests and the production build passed after the release review fixed late-wake lunch scheduling, same-account reconnection, and explicit workbook recovery. Independent review passed. Real Google tests covered Gmail/Calendar reads, Sheets preference saving, an approved lunch event and activity row, and duplicate-safe retry; these are separate from the video. The new 84.09-second continuous product recording includes a real Gemini run on clearly labeled synthetic data, food suggestions, the monthly calculator, approval and retry. Wearable integration is planned and not connected. Final release checks are recorded in the linked verification brief.
 
 ## What makes it useful
 

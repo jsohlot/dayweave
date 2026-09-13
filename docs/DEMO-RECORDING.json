@@ -1,0 +1,12 @@
+{
+  "duration": 84.0922920703888,
+  "framesCaptured": 513,
+  "source": "Chrome Page.screencastFrame continuous stream",
+  "timing": "Original capture timestamps; no cuts or speed changes",
+  "sha256": "8247063ab126d77e9d3bd94db772803a8642fbad1567ca749b6ddb03d55876bc",
+  "bytes": 5434586,
+  "decode": "passed",
+  "narration": "One continuous synthetic Sulafat take; audio at 0.98 playback rate",
+  "captions": 23,
+  "recordedBuild": "6de8f84"
+}

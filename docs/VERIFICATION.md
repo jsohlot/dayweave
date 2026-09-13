@@ -2,7 +2,16 @@
 
 Executed on September 13, 2026. This record distinguishes real provider calls from synthetic tests. The linked CI run and public demo make the execution evidence inspectable.
 
-## Completed checks
+## Current implementation and continuous recording
+
+- Release implementation `759e8b3`: all **128 tests across 10 files** and the production build passed after fixing late-wake lunch scheduling, same-account reconnection, and interrupted-workbook recovery. Independent read-only review found no remaining actionable issues in those fixes.
+- Reconnection preserves the exact pending plan for the same verified account, clears data on account changes, and requires renewed approval. Workbook recovery searches before adopting or explicitly authorizing replacement; recovery itself creates no workbook.
+- The new **84.09-second continuous screen recording** replaces the edited screenshot demo. All 513 captured frames use their original timestamps, with no video cuts or speed changes. One continuous synthetic narration track and 23 captions accompany the actual app interactions. Full-file decode passed.
+- Recording: source explanations, a successful Gemini run over synthetic data, chosen food goal, familiar merchant ideas, conditional monthly rice estimates, exact-action approval, and a retry retaining one activity row. It contains no private Google data. The video was captured from clean build `6de8f84`; the later recovery and late-wake fixes do not change its normal-day flow.
+- MP4 SHA-256: `8247063ab126d77e9d3bd94db772803a8642fbad1567ca749b6ddb03d55876bc`.
+- A separate fresh judge-style checkout of the feature candidate passed installation, 114 tests, build, full dependency audit, 21 local links, 11 built resources, and 18 public URL checks. Final release/deployment checks are recorded separately below once completed.
+
+## Earlier submitted release checks
 
 - **Automated validation:** 69 tests across 6 files passed; production TypeScript/Vite build passed. The suite covers planner timing, sparse history, DST, conflicts, approval boundaries, Google request handling, retries, account isolation, UI transitions, and bounded Gemini tool calls.
 - **Dependency audit:** production dependency audit reported zero vulnerabilities.
@@ -16,7 +25,7 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - **Live Sheets save:** app-created workbook and preference write returned HTTP 200; UI confirmed preferences saved.
 - **Credential-pattern scan:** no actual API keys, OAuth secrets, access tokens, or private keys found in publishable project files.
 
-## Publication and video
+## Earlier publication and video
 
 - **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34778472927) both passed.
 - **Hosted Google connection:** public-site OAuth succeeded and the app read the owner’s Gmail and primary Calendar. The privacy-policy link was visible in consent.
@@ -24,7 +33,7 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - **Video revision:** 101.08 seconds, 1920×1080, H.264/AAC, with one continuous synthetic narration track and 29 aligned captions. Full export decode and local browser playback passed. The ten app captures remain mode-labeled; an eleventh card clearly identifies wearable integration as planned and not connected. The previous 106.02-second publication was also verified, and is superseded by this revision.
 - **Submission:** the organizer Google Form accepted the solo-project entry at approximately 12:24 PM Pacific on September 13, 2026 and displayed “Your response has been recorded.” The submitted repository revision was `ff53f4354e73578c20e64d66641c3d88302b9990`; later documentation updates do not alter the demonstrated app.
 
-## Clean release verification
+## Earlier clean release verification
 
 The revised video release was checked from a separate fresh checkout on September 13, 2026. The checkout started without `node_modules`, `dist`, `.env.local`, or saved account settings, used a new npm cache, and installed the committed lockfile under Node.js 22.22.3. Only the public Google client ID was supplied to the build.
 
@@ -49,11 +58,11 @@ The fresh checkout verifies installation and the demo/AI workflow. Live Google a
 
 ## Evaluation boundaries
 
-### Local food-feature revision — pending publication
+### Food-feature candidate verification
 
 On September 13, 2026, revision `6de8f84` was cloned into a separate directory with no dependencies, build output, or environment file. A new npm cache and Node.js 22.22.3 were used. Installation, all 114 tests across 10 files, and the production build passed; the production dependency audit reported zero vulnerabilities. Tracked source and built assets passed both credential-pattern checks and an exact check against the temporary Gemini credential used for synthetic testing.
 
-Independent review found no remaining actionable issues in the meal-idea and monthly-calculator changes. Browser checks exercised opt-in merchant ideas, the fictional rice calculation, changed quantities, approved simulated lunch creation, and a repeat approval returning an existing reservation. A real Gemini request succeeded with synthetic inputs. No new live Google writes were performed for this revision. The final continuous video capture is pending completion; the previously published 101-second demo remains unchanged.
+Independent review found no remaining actionable issues in the meal-idea and monthly-calculator changes. Browser checks exercised opt-in merchant ideas, the fictional rice calculation, changed quantities, approved simulated lunch creation, and a repeat approval returning an existing reservation. A real Gemini request succeeded with synthetic inputs. No new live Google writes were performed for this revision. That candidate check preceded the completed 84-second continuous recording and final recovery fixes described above.
 
 Synthetic fixtures validate expected software behavior and error handling. They do not establish personal prediction accuracy. Live API checks establish integration behavior only for the tested account, scopes, inputs, and revision. Gemini was tested with synthetic data, separately from the owner's live Google data.
 
