@@ -1,0 +1,81 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:05.096
+Your calendar makes room for meetings. Dayweave makes room for your routines,
+
+2
+00:00:05.096 --> 00:00:11.900
+connecting Gmail, Google Calendar and Google Sheets. This walkthrough uses synthetic data.
+
+3
+00:00:11.900 --> 00:00:15.959
+Coffee timing uses timestamped purchases when there is enough history.
+
+4
+00:00:15.959 --> 00:00:23.667
+A purchase does not prove consumption, and email delivery time never substitutes for purchase time.
+
+5
+00:00:23.667 --> 00:00:28.927
+Sleep timing works backward from your chosen target, morning preparation and first commitment.
+
+6
+00:00:28.927 --> 00:00:35.533
+You can inspect the assumptions. This is scheduling, not a health prediction.
+
+7
+00:00:35.533 --> 00:00:37.802
+Meetings overlap the preferred lunch time.
+
+8
+00:00:37.802 --> 00:00:44.200
+Dayweave finds a complete opening around those commitments and shows why it fits.
+
+9
+00:00:44.200 --> 00:00:49.794
+Gemini actually ran on synthetic observations, calling read-only tools to select a focus.
+
+10
+00:00:49.794 --> 00:00:56.700
+Validated scheduling rules own the times. The activity trace shows the work.
+
+11
+00:00:56.700 --> 00:01:01.335
+I choose an action and review its exact event details and Sheets operation.
+
+12
+00:01:01.335 --> 00:01:05.633
+Nothing is written until I explicitly confirm.
+
+13
+00:01:05.633 --> 00:01:08.393
+The approved event appears in the schedule.
+
+14
+00:01:08.393 --> 00:01:14.333
+These walkthrough changes are simulated. The result clearly reports what happened.
+
+15
+00:01:14.333 --> 00:01:20.138
+Activity records the action. Repeated approval does not create duplicate events or rows.
+
+16
+00:01:20.138 --> 00:01:25.067
+The live provider rechecks availability before insertion.
+
+17
+00:01:25.067 --> 00:01:29.765
+With sparse history, Dayweave uses your preference instead of inventing a habit.
+
+18
+00:01:29.765 --> 00:01:33.933
+Every suggestion remains yours to choose.
+
+19
+00:01:33.933 --> 00:01:37.943
+Separately, live Gmail and Calendar reads, a Sheets preference save,
+
+20
+00:01:37.943 --> 00:01:46.000
+and an approved Calendar lunch with its Sheets log were verified. Repeating it created no duplicate.

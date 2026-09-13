@@ -36,16 +36,10 @@ Only after root records successful requests in [VERIFICATION.md](VERIFICATION.md
 - Replace the simulated-write sentence with: “This approved event is now in Google Calendar, with its action recorded in Google Sheets.” Use it only after both outcomes are verified.
 - If no qualifying live clip exists, keep the demo wording and state that live integration checks remain pending in the submission. Do not relabel simulated actions as API writes.
 
-## Export handoff — pending
+## Published video
 
-| Item | Fill only after verification |
-| --- | --- |
-| Recorded mode and data | `[Demo / live APIs with synthetic test data / clearly labeled cuts]` |
-| Actual Gemini result | `[Successful trace reference / deterministic run]` |
-| Live three-app evidence, if captured | `[Sanitized verification section or artifact reference]` |
-| Final video URL | `[Accessible video link]` |
-| Export duration | `[Measured duration; must be ≤ 120 seconds, target ≤ 110]` |
-| Anonymous playback check | `[Checked time and result]` |
-| Repository revision shown | `[Submitted commit SHA]` |
+[Watch the finished demo](https://jsohlot.github.io/dayweave/demo.html) · [Download MP4](https://jsohlot.github.io/dayweave/demo.mp4)
 
-Link the actual video from README and the submission. This document is a script, not the required video. No public frame should contain real inbox data, personal calendar titles, account identifiers, tokens, API keys or credential entry screens. This is planning software; do not claim it predicts health, improves sleep quality, or identifies nutritional needs.
+The final export is **106.02 seconds**, 1920×1080 H.264/AAC, with captions and synthetic narration. It uses ten edited captures of the working app, including enlarged original evidence and approval panels. The actual edit follows the captured states rather than this preliminary timing outline.
+
+The fictional walkthrough includes a successful real Gemini run. The final scene is a separately labeled live Google account result. Live Gmail/Calendar reads, Sheets preference saving, an approved Calendar lunch event and activity row, and a duplicate-free retry were verified independently of the fictional walkthrough. No inbox contents, keys, or private calendar titles appear in the video. See [verification](VERIFICATION.md) for scope and limitations.

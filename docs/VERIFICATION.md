@@ -1,6 +1,6 @@
 # Verification record
 
-Executed on September 13, 2026. This record distinguishes real provider calls from synthetic tests. Publication and video checks are added after they complete.
+Executed on September 13, 2026. This record distinguishes real provider calls from synthetic tests. The linked CI run and public demo make the execution evidence inspectable.
 
 ## Completed checks
 
@@ -16,11 +16,13 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - **Live Sheets save:** app-created workbook and preference write returned HTTP 200; UI confirmed preferences saved.
 - **Credential-pattern scan:** no actual API keys, OAuth secrets, access tokens, or private keys found in publishable project files.
 
-## Remaining release evidence
+## Publication and video
 
-
-- Public repository, CI and hosted URL.
-- Two-minute demo artifact and playback.
+- **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34776937654) both passed.
+- **Hosted Google connection:** public-site OAuth succeeded and the app read the owner’s Gmail and primary Calendar. The privacy-policy link was visible in consent.
+- **Responsive browser checks:** desktop 1440px and mobile 390px inspected; the 390px layout had no horizontal overflow.
+- **Video:** 106.02 seconds, 1920×1080, H.264/AAC; full export decode passed. Root inspected the rendered scenes and enlarged evidence panels. It is an edited walkthrough of actual app screenshots with synthetic narration, with modes labeled. Public playback is verified after deployment.
+- **Submission:** the organizer form is available and the entry is being prepared; confirmation is recorded only after submission.
 
 ## Evaluation boundaries
 
