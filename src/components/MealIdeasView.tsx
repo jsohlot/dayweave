@@ -11,7 +11,7 @@ export function MealIdeasView({ ideas, plan, onEdit, disabled }: { ideas: MealId
    <small>{idea.receiptCount} {plan.mode === 'demo' ? 'synthetic ' : ''}receipt{idea.receiptCount === 1 ? '' : 's'} observed</small>
    <p>{idea.description}</p>
    {idea.menuUrl && <a href={idea.menuUrl} target="_blank" rel="noreferrer">Explore {idea.merchant} menu <ArrowUpRight size={12}/></a>}
-  </article>)}</div> : <p className="meal-empty">There isn’t enough receipt evidence to suggest a familiar place. Your lunch break is still available to reserve above.</p>}
+  </article>)}</div> : <p className="meal-empty">There isn’t enough receipt evidence to suggest a familiar place. Check the schedule above for available meal breaks.</p>}
   <details className="meal-coverage"><summary>What these ideas are based on</summary><p>{ideas.coverage}</p><p>Menu links are information only. No order is placed, and the food goal is not a nutrition assessment.</p></details>
  </section>;
 }
