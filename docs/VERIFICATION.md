@@ -49,6 +49,12 @@ The fresh checkout verifies installation and the demo/AI workflow. Live Google a
 
 ## Evaluation boundaries
 
+### Local food-feature revision — pending publication
+
+On September 13, 2026, revision `6de8f84` was cloned into a separate directory with no dependencies, build output, or environment file. A new npm cache and Node.js 22.22.3 were used. Installation, all 114 tests across 10 files, and the production build passed; the production dependency audit reported zero vulnerabilities. Tracked source and built assets passed both credential-pattern checks and an exact check against the temporary Gemini credential used for synthetic testing.
+
+Independent review found no remaining actionable issues in the meal-idea and monthly-calculator changes. Browser checks exercised opt-in merchant ideas, the fictional rice calculation, changed quantities, approved simulated lunch creation, and a repeat approval returning an existing reservation. A real Gemini request succeeded with synthetic inputs. No new live Google writes were performed for this revision. The final continuous video capture is pending completion; the previously published 101-second demo remains unchanged.
+
 Synthetic fixtures validate expected software behavior and error handling. They do not establish personal prediction accuracy. Live API checks establish integration behavior only for the tested account, scopes, inputs, and revision. Gemini was tested with synthetic data, separately from the owner's live Google data.
 
 Calendar conflict checks cover the owned primary calendar. An external edit between the final availability check and insertion cannot be atomically excluded. Sheets appends are serialized in the same browser; simultaneous approvals on separate devices do not have a server-side transaction lock. Google OAuth remains in testing mode: other accounts require the owner's test-user authorization or their own configured client.
