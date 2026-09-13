@@ -16,6 +16,20 @@ vi.mock('../lib/google', () => ({ connectGoogle: async () => harness.live, loadG
 beforeEach(() => { harness.generation.mockClear(); harness.providers.length = 0; harness.live = null; });
 afterEach(cleanup);
 async function ready() { await screen.findByRole('button', { name: 'Review & add' }); }
+it('clears household estimates when switching to another plan', async () => {
+ render(<App/>); await ready();
+ fireEvent.click(screen.getByText('Monthly estimate'));
+ fireEvent.click(screen.getByRole('button', { name: 'Try a fictional example' }));
+ fireEvent.click(screen.getByRole('button', { name: 'Calculate estimate' }));
+ expect(screen.getByRole('region', { name: 'Monthly estimate result' }).textContent).toContain('133.3 g');
+ fireEvent.change(screen.getByLabelText('Demo scenario'), { target: { value: 'sparse' } }); await ready();
+ expect(screen.queryByRole('region', { name: 'Monthly estimate result' })).toBeNull();
+ fireEvent.click(screen.getByText('Monthly estimate'));
+ expect((screen.getByLabelText('Purchased amount · kg') as HTMLInputElement).value).toBe('');
+ expect((screen.getByLabelText('People sharing this food') as HTMLInputElement).value).toBe('');
+ expect(screen.queryByText(/Fictional example:/)).toBeNull();
+ expect(harness.providers.every(provider => vi.mocked(provider.savePreferences).mock.calls.length === 0)).toBe(true);
+});
 it('keeps generation and review read-only until exact action confirmation', async () => {
  render(<App/>); await ready();
  const provider = harness.providers[0];

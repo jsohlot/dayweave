@@ -90,6 +90,7 @@ export function MonthlyFoodEstimate() {
     {draft.mode === 'purchase' && <p>{draft.consumedPercent}% of purchases assumed eaten; this does not establish what anyone ate.</p>}
     <div className="monthly-food-totals"><div><strong>{format(result.foodGramsPerPersonPerDay)} g</strong><span>food per person per day</span></div><div><strong>{format(result.carbsGramsPerPersonPerDay)} g</strong><span>carbohydrates from this food per person per day</span></div></div>
     <p>{format(result.consumedKg)} kg over the period · {draft.quantityBasis} weight · {draft.carbsPer100g} g carbohydrate per 100 g.</p>
+    <p>{format(result.consumedKg * 1000 * (number(draft.carbsPer100g) / 100))} g carbohydrates for the household over this period, from this food alone.</p>
     <p>Shared evenly between {draft.people} people over {draft.days} days. Individual portions may differ.</p>
     {result.targetContributionPercent !== null && <p className="monthly-food-target">{format(result.targetContributionPercent)}% of your entered {draft.dailyCarbTarget} g daily target, from this food alone. This compares only this food; it does not assess your total diet or whether a target is appropriate.</p>}
    </section>}

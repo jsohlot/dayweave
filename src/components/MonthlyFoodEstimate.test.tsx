@@ -29,6 +29,7 @@ it('shows the fictional example as conditional per-person food and carbohydrate 
  const result = within(screen.getByRole('region', { name: 'Monthly estimate result' }));
  expect(result.getByText('166.7 g')).toBeTruthy();
  expect(result.getByText('133.3 g')).toBeTruthy();
+ expect(result.getByText(/8,000.0 g carbohydrates for the household over this period/)).toBeTruthy();
  expect(result.getByText(/User-reported amount/)).toBeTruthy();
  expect(result.getByText(/Shared evenly between 2 people over 30 days/)).toBeTruthy();
  expect(result.queryByText(/of your entered/)).toBeNull();
