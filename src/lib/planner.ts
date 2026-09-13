@@ -105,7 +105,8 @@ export function buildPlan(date: string, p: Preferences, sources: SourceData, mod
 
   const lunchPreferred = localTime(date, p.lunchTime, p.timeZone);
   const lunchBusy: CalendarEvent[] = [...busy, ...actions.map(a => ({ ...a, allDay: false }))];
-  const lunch = nearestGap(lunchPreferred, p.lunchMinutes, localTime(date, '11:00', p.timeZone), localTime(date, '15:00', p.timeZone), lunchBusy, p.timeZone);
+  const lunchLower = DateTime.max(localTime(date, '11:00', p.timeZone), wake);
+  const lunch = nearestGap(lunchPreferred, p.lunchMinutes, lunchLower, localTime(date, '15:00', p.timeZone), lunchBusy, p.timeZone);
   const lunchConflicts = busy.filter(e => overlaps(iso(lunchPreferred), iso(lunchPreferred.plus({ minutes: p.lunchMinutes })), e, p.timeZone));
   const lunchIds = ['pref-lunch', ...lunchConflicts.map(eventEvidence)];
   const lunchReason = lunch ? `${lunchConflicts.length ? 'Your preferred lunch time has a calendar conflict. ' : ''}The nearest complete ${p.lunchMinutes}-minute opening is ${fmt(lunch)}–${fmt(lunch.plus({ minutes: p.lunchMinutes }))}. Calendar availability is checked again before saving.` : `No uninterrupted ${p.lunchMinutes}-minute gap was found between 11 AM and 3 PM. Review your calendar; no lunch action is proposed.`;

@@ -27,6 +27,18 @@ describe('safe deterministic planning', () => {
     expect(plan.actions.find(a => a.kind === 'lunch')?.start).toBe('2026-09-14T11:30:00.000-07:00');
     expect(plan.cards.find(c => c.kind === 'lunch')?.reasoning).toMatch(/conflict/i);
   });
+  it.each([['America/Los_Angeles', '-07:00'], ['Asia/Kolkata', '+05:30']])('keeps lunch after a late wake in %s', (timeZone, offset) => {
+    const plan = buildPlan('2026-09-14', { ...p, timeZone, defaultWakeTime: '14:00' }, source());
+    const lunch = plan.actions.find(a => a.kind === 'lunch');
+    expect(lunch?.start).toBe(`2026-09-14T14:00:00.000${offset}`);
+    expect(lunch?.end).toBe(`2026-09-14T14:30:00.000${offset}`);
+  });
+  it.each(['14:45', '15:00', '16:00'])('offers no lunch when wake at %s leaves no complete lunch opening', defaultWakeTime => {
+    const plan = buildPlan('2026-09-14', { ...p, defaultWakeTime }, source());
+    expect(plan.actions.find(a => a.kind === 'lunch')).toBeUndefined();
+    expect(plan.cards.find(c => c.kind === 'lunch')?.actionId).toBeUndefined();
+    expect(plan.warnings).toContain('No conflict-free lunch slot was found.');
+  });
   it('does not offer a lunch or coffee action in an all-day busy block', () => {
     const plan = buildPlan('2026-09-14', p, source([event('2026-09-14', '2026-09-15', true)]));
     expect(plan.actions.filter(a => a.kind === 'lunch' || a.kind === 'coffee')).toHaveLength(0);
