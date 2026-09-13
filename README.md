@@ -8,7 +8,7 @@ Built for the [Multi-App AI Agent Hackathon](https://multiappagenthackathon.com/
 
 ## Try it
 
-[Open Dayweave](https://jsohlot.github.io/dayweave/) · [Watch the 106-second demo](https://jsohlot.github.io/dayweave/demo.html) · [Verification record](docs/VERIFICATION.md)
+[Open Dayweave](https://jsohlot.github.io/dayweave/) · [Watch the 101-second demo](https://jsohlot.github.io/dayweave/demo.html) · [Verification record](docs/VERIFICATION.md)
 
 The hosted app includes a clearly labeled synthetic demo. The hosted Google client is configured for the owner’s test account. Other users can run the demo immediately or use their own Google OAuth client and authorized account. Gemini-assisted planning requires your own Gemini API key, entered in the app for the current page session only.
 
@@ -72,9 +72,13 @@ This prototype has no prospective clinical or behavioral prediction study. Its d
 - Google tokens and Gemini keys never belong in Git, browser URLs, screenshots, video, or `VITE_*` build variables.
 - Review [privacy](public/privacy.html) and [Google setup](docs/GOOGLE-SETUP.md).
 
+## Planned extension
+
+Wearable sleep and activity data could provide additional context for suggestions. This integration is planned, not connected; provider setup and each user’s authorization would be required.
+
 ## Submission materials
 
-- [Two-minute demonstration outline](docs/DEMO.md)
+- [Demo video and transcript](docs/DEMO.md)
 - [Verification record](docs/VERIFICATION.md)
 - [Build contract](docs/BUILD-CONTRACT.md)
 - [License](LICENSE)

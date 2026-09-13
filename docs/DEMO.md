@@ -1,45 +1,44 @@
-# Dayweave demo script
+# Dayweave demo
 
-Target runtime: **108 seconds**, leaving a 12-second margin under the event’s two-minute limit. Rehearse and check the actual export duration; the timeline is a recording plan, not proof of a finished video. The [official hackathon brief](https://multiappagenthackathon.com/) asks for a useful agent across at least three external apps, evidence that it works, and a video accessible to judges.
+[Watch the demo](https://jsohlot.github.io/dayweave/demo.html) · [Download MP4](https://jsohlot.github.io/dayweave/demo.mp4)
 
-## Before recording
+**Runtime: 101.08 seconds**, within the hackathon’s two-minute limit. The 1920×1080 H.264/AAC export uses one continuous synthetic narration track, synchronized captions, ten actual app captures, and a clearly labeled wearable roadmap card.
 
-Use the built-in **Demo workspace** with **A full day** and default routines for the continuous walkthrough below. It contains synthetic data and performs simulated Calendar/Sheets actions in memory. Keep its mode badge visible. The full-day fixture has meetings across the preferred 12:30 lunch time; the proposed half-hour lunch begins at 1:15 PM. Sleep timing works backward from the chosen sleep target and morning buffers; coffee uses timestamped purchases across distinct days. Do not describe lunch as learned from receipt history.
+## What the video demonstrates
 
-If root has verified a successful Gemini run, configure it and give consent before capture; never record a key field or authorization popup. The UI must say **Gemini AI used** before using the AI-success narration. A key’s presence, a mock test, or a loading trace is insufficient. A real Gemini call over synthetic data still does not establish live Gmail, Calendar or Sheets use.
+The fictional walkthrough includes a successful real Gemini run over synthetic observations. Walkthrough Calendar and Sheets actions are simulated and labeled. A separate live-account scene represents independently verified Gmail and Calendar reads, Sheets preference saving, an approved Calendar lunch event with its activity row, and a duplicate-free retry. See [verification](VERIFICATION.md) for the tested scope.
 
-Keep the same plan and provider through the repeat-action sequence. Switching scenarios resets the demo session, so show sparse history last. Nothing here authorizes creating synthetic data in a live account.
+Wearable integration is a planned extension. Provider setup and user authorization are still required; no wearable is connected today. This is not a claim that an attempted integration was blocked.
 
 ## Narration and screen sequence
 
-Read only the narration column. Use the alternate AI line below when needed.
-
-| Time | Screen action | Narration |
+| Time | Screen | Narration |
 | --- | --- | --- |
-| 0–12s | Show the working dashboard and all three cards. | Tomorrow’s meetings are already on your calendar. But rest, coffee and lunch still need room. Dayweave helps you prepare before the day begins. |
-| 12–23s | Point to **Demo workspace** and the three app connections. | This walkthrough uses synthetic data. The connected workflow brings together Gmail receipts, Google Calendar commitments, and routines and action history in Google Sheets. |
-| 23–36s | Expand coffee’s **Why this fits**. Keep receipt evidence readable. | Coffee suggestions use timestamped purchase history when there’s enough evidence. Purchase time isn’t consumption time, and an email’s delivery time never stands in for a purchase. |
-| 36–48s | Expand sleep evidence, then lunch evidence beside the schedule. | Sleep timing works backward from your target and morning commitments. Here, meetings overlap the preferred lunch time, so Dayweave finds a complete opening at one-fifteen. |
-| 48–61s | Show **Gemini AI used** and expand **View agent activity**; otherwise use the alternate line. | Gemini calls read-only tools to choose which suggestion deserves attention. The scheduling rules still own the times. The activity trace makes that division visible. |
-| 61–80s | Select only lunch. Open **Review & add**, pause on exact start/end and Sheets notice, then confirm. | I choose lunch and review the exact event and activity-log write before confirming. In this demo, both changes are simulated. The selected break now appears in the schedule. |
-| 80–95s | Select the same lunch action again, review and confirm without refreshing. Show the already-reserved result; open **Activity** to show one row. | Repeating the same approval doesn’t create another event or log row. The live provider also rechecks availability before writing and reports conflicts or incomplete logging. |
-| 95–108s | Close Activity, switch to **A fresh start**, expand coffee evidence. End on the dashboard. | With sparse history, Dayweave uses a preference instead of inventing a pattern. Three apps, evidence you can inspect, and small changes you control. |
+| 0.00–14.46s | Tomorrow, with room for you. | Tomorrow is packed with meetings. Where do coffee, lunch, and a good night's sleep fit? Dayweave connects Gmail, Google Calendar, and Google Sheets to help you make room. Here's a walkthrough with sample data. |
+| 14.46–24.48s | A familiar morning, grounded in evidence. | It starts with your usual coffee time, using timestamped purchases when there's enough history. That's a useful clue, though a receipt can't tell us what you actually drank. |
+| 24.48–33.40s | Prepare tonight for tomorrow. | Then it works backward from your first commitment, your morning routine, and your chosen sleep target, so you can plan tonight with tomorrow in mind. |
+| 33.40–40.30s | Find a real opening for lunch. | When meetings crowd out lunch, it finds a full break that really fits, and explains why that time works. |
+| 40.30–51.08s | AI prioritizes. Validated rules schedule. | Gemini brings these signals together, using read-only tools to choose a focus. Scheduling rules check the times, and you can follow the agent's reasoning in its activity trace. |
+| 51.08–58.60s | Review every change before it happens. | You're still in control. Choose a suggestion, review the exact calendar event and Sheets update, then confirm. |
+| 58.60–65.00s | One approval. A visible result. | The event appears in your schedule. These sample changes are simulated, and the app labels them clearly. |
+| 65.00–70.74s | Keep a record. Avoid duplicates. | Every action gets a record. Repeat the same approval, and it avoids creating duplicates. |
+| 70.74–75.52s | Missing history stays missing. | And when history is thin, it says so, using your preferences instead of guessing at a habit. |
+| 75.52–88.72s | Separate, verified live integration proof. | We also tested a real Google account: reading Gmail and Calendar, saving preferences in Sheets, and creating an approved lunch event with its activity log. Repeating that action created no duplicate. |
+| 88.72–101.08s | Wearable roadmap — planned, not connected | Next, we'd connect a wearable, with the user's authorization, to bring in sleep and activity data. That's planned, not connected today. Dayweave makes tomorrow easier to act on, one choice at a time. |
 
-**Alternate 48–61s narration when Gemini has not succeeded:** “This run is labeled deterministic: Gemini wasn’t used. The optional agent can select a focus through read-only tools, while scheduling rules and approval control the changes.” Show the actual deterministic badge and trace. Do not conceal the status by using an unrelated successful screenshot.
+## Recording boundaries
 
-## Optional live proof insert
+- Screens are edited captures of the working app, not an uninterrupted screen recording. Enlarged panels use the original screenshot pixels.
+- The synthetic walkthrough and live Google verification are visibly distinguished.
+- No inbox contents, keys, or private calendar titles appear in the video.
+- The synthetic voice is disclosed. No speed adjustment or inserted gaps were used.
+- A receipt proves a purchase, not consumption. The planner does not establish clinical or nutritional prediction accuracy.
 
-Only after root records successful requests in [VERIFICATION.md](VERIFICATION.md), replace part of the walkthrough with a clearly labeled cut using an authorized, synthetic-only test account. Fit it into the existing 108 seconds; do not append an extra segment.
+## Export details
 
-- Show the **Live Google account** badge and the source-read trace, then the approved Calendar event and corresponding Sheets activity row. A sidebar connection badge alone is not evidence of three successful integrations.
-- Replace the mode narration with: “These screens use live Google APIs with synthetic test data. Gmail supplies receipt observations, Calendar supplies commitments, and Sheets supplies routines and records approved actions.”
-- Replace the simulated-write sentence with: “This approved event is now in Google Calendar, with its action recorded in Google Sheets.” Use it only after both outcomes are verified.
-- If no qualifying live clip exists, keep the demo wording and state that live integration checks remain pending in the submission. Do not relabel simulated actions as API writes.
-
-## Published video
-
-[Watch the finished demo](https://jsohlot.github.io/dayweave/demo.html) · [Download MP4](https://jsohlot.github.io/dayweave/demo.mp4)
-
-The final export is **106.02 seconds**, 1920×1080 H.264/AAC, with captions and synthetic narration. It uses ten edited captures of the working app, including enlarged original evidence and approval panels. The actual edit follows the captured states rather than this preliminary timing outline.
-
-The fictional walkthrough includes a successful real Gemini run. The final scene is a separately labeled live Google account result. Live Gmail/Calendar reads, Sheets preference saving, an approved Calendar lunch event and activity row, and a duplicate-free retry were verified independently of the fictional walkthrough. No inbox contents, keys, or private calendar titles appear in the video. See [verification](VERIFICATION.md) for scope and limitations.
+- Duration: 101.08 seconds.
+- Resolution: 1920×1080 at 30 fps; H.264 video and AAC audio.
+- English captions: embedded in the picture and available as a [WebVTT track](https://jsohlot.github.io/dayweave/demo.vtt).
+- Voice: Sulafat, generated with Gemini 3.1 Flash TTS Preview.
+- Full-file decode and browser playback verified before publication.
+- MP4 SHA-256: `76a0b202f81eed96310b36a32cf216bcc43e71a2651eb867578ccb2d15021fec`.

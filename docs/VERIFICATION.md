@@ -21,8 +21,24 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - **Public repository and site:** [source](https://github.com/jsohlot/dayweave) and [hosted app](https://jsohlot.github.io/dayweave/) opened successfully. [CI verification and deployment](https://github.com/jsohlot/dayweave/actions/runs/34777473525) both passed.
 - **Hosted Google connection:** public-site OAuth succeeded and the app read the owner’s Gmail and primary Calendar. The privacy-policy link was visible in consent.
 - **Responsive browser checks:** desktop 1440px and mobile 390px inspected; the 390px layout had no horizontal overflow.
-- **Video:** 106.02 seconds, 1920×1080, H.264/AAC; full export decode passed. Root inspected the rendered scenes and enlarged evidence panels. It is an edited walkthrough of actual app screenshots with synthetic narration, with modes labeled. Public playback was verified: the hosted player loaded the 106.021-second video, advanced past 13 seconds, and reported no media error. Anonymous HTTP returned 200 with video/mp4.
+- **Video revision:** 101.08 seconds, 1920×1080, H.264/AAC, with one continuous synthetic narration track and 29 aligned captions. Full export decode and local browser playback passed. The ten app captures remain mode-labeled; an eleventh card clearly identifies wearable integration as planned and not connected. The previous 106.02-second publication was also verified, and is superseded by this revision.
 - **Submission:** the organizer Google Form accepted the solo-project entry at approximately 12:24 PM Pacific on September 13, 2026 and displayed “Your response has been recorded.” The submitted repository revision was `ff53f4354e73578c20e64d66641c3d88302b9990`; later documentation updates do not alter the demonstrated app.
+
+## Clean release verification
+
+The revised video release was checked from a separate fresh checkout on September 13, 2026. The checkout started without `node_modules`, `dist`, `.env.local`, or saved account settings, used a new npm cache, and installed the committed lockfile under Node.js 22.22.3. Only the public Google client ID was supplied to the build.
+
+- `npm ci`: passed; zero reported vulnerabilities.
+- `npm test`: all 69 tests across 6 files passed.
+- `npm run build`: TypeScript and production Vite build passed.
+- `npm audit --omit=dev`: zero vulnerabilities.
+- The production build was served on a new local origin and opened in Chrome. The full-day workflow required review before approval, created one simulated lunch event and activity row, and retained exactly one row after repeated approval.
+- Fresh-start and early-start scenarios worked; sparse history stayed labeled and the early commitment moved the planned wake-up to 5:30 AM.
+- A real Gemini run on synthetic early-start data succeeded and the UI displayed `Gemini AI used`. Google account data was not used for this AI check.
+- The 390px viewport had no horizontal overflow; browser console checks found no errors or warnings during the scenario checks.
+- Tracked source and production text assets passed a credential-pattern scan. The published MP4 matches the reviewed revision, SHA-256 `76a0b202f81eed96310b36a32cf216bcc43e71a2651eb867578ccb2d15021fec`.
+
+The fresh checkout verifies installation and the demo/AI workflow. Live Google authorization and write/retry checks are the separate executed checks above; app source code is unchanged by the video release. GitHub Actions also installs, tests, builds, and deploys on a fresh Ubuntu runner for each main-branch publication.
 
 ## Evaluation boundaries
 

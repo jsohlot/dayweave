@@ -2,7 +2,7 @@
 
 **A day-ahead planning agent that makes room for rest, coffee, and lunch—with evidence you can inspect and changes you approve.**
 
-[Working app](https://jsohlot.github.io/dayweave/) · [106-second demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
+[Working app](https://jsohlot.github.io/dayweave/) · [101-second demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
 
 ## Problem and value
 
@@ -24,7 +24,7 @@ The Gemini agent uses a bounded read-only tool loop to inspect the validated pla
 
 The provider checks availability again before insertion, uses stable event IDs for retries, and reconciles existing events before logging. Uncertain workbook creation can recover without creating a second workbook. Errors and incomplete logging remain visible. Model output cannot call mutation tools or replace the validated schedule. Credentials stay in page memory.
 
-**Executed evidence:** 69 automated tests passed, production build and hosted CI passed, and a separate reviewer verified the principal recovery and isolation fixes. Real Google tests covered Gmail and Calendar reads, Sheets preference saving, a Calendar lunch event with an activity row, and repeated approval without duplicate event or log creation. Real Gemini requests succeeded on synthetic inputs. The video shows a fictional walkthrough and a separately labeled live Google result; its measured duration is 106.02 seconds.
+**Executed evidence:** 69 automated tests passed, production build and hosted CI passed, and a separate reviewer verified the principal recovery and isolation fixes. Real Google tests covered Gmail and Calendar reads, Sheets preference saving, a Calendar lunch event with an activity row, and repeated approval without duplicate event or log creation. Real Gemini requests succeeded on synthetic inputs. The video shows a fictional walkthrough and a separately labeled live Google result; its measured duration is 101.08 seconds. The closing card describes a planned wearable extension, which is not connected.
 
 ## What makes it useful
 

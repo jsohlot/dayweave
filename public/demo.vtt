@@ -1,81 +1,88 @@
 WEBVTT
 
-1
-00:00:00.000 --> 00:00:05.096
-Your calendar makes room for meetings. Dayweave makes room for your routines,
+00:00:00.000 --> 00:00:02.800
+Tomorrow is packed with meetings.
 
-2
-00:00:05.096 --> 00:00:11.900
-connecting Gmail, Google Calendar and Google Sheets. This walkthrough uses synthetic data.
+00:00:02.800 --> 00:00:06.820
+Where do coffee, lunch, and a good night's sleep fit?
 
-3
-00:00:11.900 --> 00:00:15.959
-Coffee timing uses timestamped purchases when there is enough history.
+00:00:06.820 --> 00:00:11.160
+Dayweave connects Gmail, Google Calendar, and Google Sheets to help you make
 
-4
-00:00:15.959 --> 00:00:23.667
-A purchase does not prove consumption, and email delivery time never substitutes for purchase time.
+00:00:11.160 --> 00:00:14.460
+room. Here's a walkthrough with sample data.
 
-5
-00:00:23.667 --> 00:00:28.927
-Sleep timing works backward from your chosen target, morning preparation and first commitment.
+00:00:14.460 --> 00:00:18.800
+It starts with your usual coffee time, using timestamped purchases when there's
 
-6
-00:00:28.927 --> 00:00:35.533
-You can inspect the assumptions. This is scheduling, not a health prediction.
+00:00:18.800 --> 00:00:22.720
+enough history. That's a useful clue, though a receipt can't tell us
 
-7
-00:00:35.533 --> 00:00:37.802
-Meetings overlap the preferred lunch time.
+00:00:22.720 --> 00:00:24.480
+what you actually drank.
 
-8
-00:00:37.802 --> 00:00:44.200
-Dayweave finds a complete opening around those commitments and shows why it fits.
+00:00:24.480 --> 00:00:28.460
+Then it works backward from your first commitment, your morning routine, and
 
-9
-00:00:44.200 --> 00:00:49.794
-Gemini actually ran on synthetic observations, calling read-only tools to select a focus.
+00:00:28.460 --> 00:00:32.380
+your chosen sleep target, so you can plan tonight with tomorrow in
 
-10
-00:00:49.794 --> 00:00:56.700
-Validated scheduling rules own the times. The activity trace shows the work.
+00:00:32.380 --> 00:00:33.400
+mind.
 
-11
-00:00:56.700 --> 00:01:01.335
-I choose an action and review its exact event details and Sheets operation.
+00:00:33.400 --> 00:00:36.900
+When meetings crowd out lunch, it finds a full break that really
 
-12
-00:01:01.335 --> 00:01:05.633
-Nothing is written until I explicitly confirm.
+00:00:36.900 --> 00:00:40.300
+fits, and explains why that time works.
 
-13
-00:01:05.633 --> 00:01:08.393
-The approved event appears in the schedule.
+00:00:40.300 --> 00:00:45.760
+Gemini brings these signals together, using read-only tools to choose a focus.
 
-14
-00:01:08.393 --> 00:01:14.333
-These walkthrough changes are simulated. The result clearly reports what happened.
+00:00:45.760 --> 00:00:48.980
+Scheduling rules check the times, and you can follow the agent's reasoning
 
-15
-00:01:14.333 --> 00:01:20.138
-Activity records the action. Repeated approval does not create duplicate events or rows.
+00:00:48.980 --> 00:00:51.080
+in its activity trace.
 
-16
-00:01:20.138 --> 00:01:25.067
-The live provider rechecks availability before insertion.
+00:00:51.080 --> 00:00:55.840
+You're still in control. Choose a suggestion, review the exact calendar event
 
-17
-00:01:25.067 --> 00:01:29.765
-With sparse history, Dayweave uses your preference instead of inventing a habit.
+00:00:55.840 --> 00:00:58.600
+and Sheets update, then confirm.
 
-18
-00:01:29.765 --> 00:01:33.933
-Every suggestion remains yours to choose.
+00:00:58.600 --> 00:01:00.780
+The event appears in your schedule.
 
-19
-00:01:33.933 --> 00:01:37.943
-Separately, live Gmail and Calendar reads, a Sheets preference save,
+00:01:00.780 --> 00:01:05.000
+These sample changes are simulated, and the app labels them clearly.
 
-20
-00:01:37.943 --> 00:01:46.000
-and an approved Calendar lunch with its Sheets log were verified. Repeating it created no duplicate.
+00:01:05.000 --> 00:01:07.120
+Every action gets a record.
+
+00:01:07.120 --> 00:01:10.740
+Repeat the same approval, and it avoids creating duplicates.
+
+00:01:10.740 --> 00:01:14.640
+And when history is thin, it says so, using your preferences instead
+
+00:01:14.640 --> 00:01:15.520
+of guessing at a habit.
+
+00:01:15.520 --> 00:01:20.840
+We also tested a real Google account: reading Gmail and Calendar, saving
+
+00:01:20.840 --> 00:01:24.740
+preferences in Sheets, and creating an approved lunch event with its activity
+
+00:01:24.740 --> 00:01:28.720
+log. Repeating that action created no duplicate.
+
+00:01:28.720 --> 00:01:32.400
+Next, we'd connect a wearable, with the user's authorization, to bring in
+
+00:01:32.400 --> 00:01:36.720
+sleep and activity data. That's planned, not connected today.
+
+00:01:36.720 --> 00:01:41.080
+Dayweave makes tomorrow easier to act on, one choice at a time.
