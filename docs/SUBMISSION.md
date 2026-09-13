@@ -2,7 +2,7 @@
 
 **A day-ahead planning agent that makes room for rest, coffee, and lunch—with evidence you can inspect and changes you approve.**
 
-[Working app](https://jsohlot.github.io/dayweave/) · [84-second continuous demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
+[Working app](https://jsohlot.github.io/dayweave/) · [90-second continuous demo](https://jsohlot.github.io/dayweave/demo.html) · [GitHub](https://github.com/jsohlot/dayweave) · [Executed verification](VERIFICATION.md)
 
 ## Problem and value
 
@@ -24,7 +24,7 @@ The Gemini agent uses a bounded read-only tool loop to inspect the validated pla
 
 The provider checks availability again before insertion, uses stable event IDs for retries, and reconciles existing events before logging. Uncertain workbook creation searches for the original workbook. If it remains missing, replacement requires explicit confirmation with a warning about possible late discovery. Same-account reconnection preserves unfinished actions for renewed review. Errors and incomplete logging remain visible. Model output cannot call mutation tools or replace the validated schedule. Credentials stay in page memory.
 
-**Executed evidence:** 128 automated tests and the production build passed after the release review fixed late-wake lunch scheduling, same-account reconnection, and explicit workbook recovery. Independent review passed. Real Google tests covered Gmail/Calendar reads, Sheets preference saving, an approved lunch event and activity row, and duplicate-safe retry; these are separate from the video. The new 84.09-second continuous product recording includes a real Gemini run on clearly labeled synthetic data, food suggestions, the monthly calculator, approval and retry. Wearable integration is planned and not connected. Final release checks are recorded in the linked verification brief.
+**Executed evidence:** 128 automated tests and the production build passed after the release review fixed late-wake lunch scheduling, same-account reconnection, and explicit workbook recovery. Independent review passed. Real Google tests covered Gmail/Calendar reads, Sheets preference saving, an approved lunch event and activity row, and duplicate-safe retry; these are separate from the video. The new 89.51-second continuous product recording leads with sleep and coffee evidence, a real Gemini review, approval and duplicate prevention. Optional nutrition suggestions and the monthly calculator occupy a short later segment. Sample data and simulated actions are labeled; a later AI quota fallback is visible while planning and nutrition remain usable. Wearable integration is planned and not connected. Final release checks are recorded in the linked verification brief.
 
 ## What makes it useful
 

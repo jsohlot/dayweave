@@ -1,93 +1,107 @@
 WEBVTT
 
 1
-00:00:00.000 --> 00:00:05.776
-Tomorrow is packed. Dayweave connects Gmail, Google Calendar, and Google Sheets to
+00:00:00.000 --> 00:00:03.740
+Tomorrow’s calendar is full, but your day needs more than meetings.
 
 2
-00:00:05.776 --> 00:00:08.633
-make room for coffee, lunch, and rest.
+00:00:03.740 --> 00:00:07.940
+Dayweave connects Gmail, Google Calendar, and Google Sheets to make room for
 
 3
-00:00:08.633 --> 00:00:11.959
-This walkthrough uses clearly labeled sample data.
+00:00:07.940 --> 00:00:12.340
+rest, coffee, and lunch. This walkthrough uses sample data.
 
 4
-00:00:11.959 --> 00:00:15.449
-Gemini reviews minimized signals through read-only tools.
+00:00:12.340 --> 00:00:16.180
+Start with sleep. Your morning commitments and the routines you choose shape
 
 5
-00:00:15.449 --> 00:00:20.184
-Scheduling rules validate the times, and this activity trace shows the calls.
+00:00:16.180 --> 00:00:18.740
+a suggested wake-up and wind-down time.
 
 6
-00:00:20.184 --> 00:00:22.714
-Each suggestion explains its evidence.
+00:00:18.740 --> 00:00:23.040
+Open the explanation to see the calendar evidence and preferences behind it.
 
 7
-00:00:22.714 --> 00:00:27.000
-Food ideas start with a goal you choose: include more protein.
+00:00:23.040 --> 00:00:27.860
+Next, coffee. Receipt purchase times suggest a familiar window, while your
+calendar
 
 8
-00:00:27.000 --> 00:00:31.020
-Recent receipt patterns suggest familiar options at Starbucks and Chipotle, plus a
+00:00:27.860 --> 00:00:31.740
+helps find an opening. Dayweave keeps purchase history separate from what you
 
 9
-00:00:31.020 --> 00:00:33.184
-reminder for your next Costco trip.
+00:00:31.740 --> 00:00:33.080
+actually drank.
 
 10
-00:00:33.184 --> 00:00:35.714
-These are menu ideas, not food orders.
+00:00:33.080 --> 00:00:37.020
+Gemini helps prioritize the plan using limited planning context.
 
 11
-00:00:35.714 --> 00:00:38.551
-Ingredients and availability still need checking.
+00:00:37.020 --> 00:00:40.780
+The activity view shows its work, and scheduling checks keep suggested times
 
 12
-00:00:38.551 --> 00:00:42.755
-Receipts don't prove what someone ate, or whether they're protein deficient.
+00:00:40.780 --> 00:00:42.560
+grounded in your calendar.
 
 13
-00:00:42.755 --> 00:00:47.796
-That distinction keeps suggestions useful without pretending to know your entire diet.
+00:00:42.560 --> 00:00:44.980
+Then turn a suggestion into an action.
 
 14
-00:00:47.796 --> 00:00:50.755
-The monthly calculator makes assumptions explicit.
+00:00:44.980 --> 00:00:48.760
+Choose lunch, review the exact event and activity entry, and confirm.
 
 15
-00:00:50.755 --> 00:00:54.571
-Ten kilograms of dry rice, shared by two people over thirty days,
+00:00:48.760 --> 00:00:52.460
+Repeat the approval, and Dayweave recognizes the existing reservation.
 
 16
-00:00:54.571 --> 00:00:58.694
-gives this conditional estimate. Change the amount eaten to five kilograms, and
+00:00:52.460 --> 00:00:54.680
+There’s still just one activity record.
 
 17
-00:00:58.694 --> 00:00:59.367
-the result halves.
+00:00:54.680 --> 00:00:57.940
+Nutrition is an optional feature within this day-planning workflow.
 
 18
-00:00:59.367 --> 00:01:02.061
-Now protect the lunch break.
+00:00:57.940 --> 00:01:01.320
+Choose a food goal, and familiar receipt patterns suggest ideas for your
 
 19
-00:01:02.061 --> 00:01:06.306
-Select it, review the exact calendar event and Sheets activity entry, then
+00:01:01.320 --> 00:01:03.820
+coffee break, lunch, or next grocery trip.
 
 20
-00:01:06.306 --> 00:01:09.490
-confirm. The sample event appears in the schedule.
+00:01:03.820 --> 00:01:07.380
+These are suggestions you can explore, not a diagnosis of your diet.
 
 21
-00:01:09.490 --> 00:01:13.408
-Repeat the approval, and the existing reservation is recognized without creating a
+00:01:07.380 --> 00:01:10.960
+For a longer view, the monthly calculator estimates one food using quantities
 
 22
-00:01:13.408 --> 00:01:16.796
-duplicate. The activity log keeps one record.
+00:01:10.960 --> 00:01:12.920
+and sharing assumptions you enter.
 
 23
-00:01:16.796 --> 00:01:21.358
-Real Google integrations were tested separately; wearable data remains a future connection.
+00:01:12.920 --> 00:01:15.860
+It shows a conditional average, not your total intake.
+
+24
+00:01:15.860 --> 00:01:19.780
+From preparing for sleep to protecting a break, you decide what fits.
+
+25
+00:01:19.780 --> 00:01:23.340
+Dayweave brings the plan together, then acts only with your approval.
+
+26
+00:01:23.340 --> 00:01:27.091
+Google integrations were tested separately; wearable data is a future
+connection.

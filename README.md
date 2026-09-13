@@ -8,7 +8,7 @@ Built for the [Multi-App AI Agent Hackathon](https://multiappagenthackathon.com/
 
 ## Try it
 
-[Open Dayweave](https://jsohlot.github.io/dayweave/) · [Watch the 84-second live recording](https://jsohlot.github.io/dayweave/demo.html) · [Verification record](docs/VERIFICATION.md)
+[Open Dayweave](https://jsohlot.github.io/dayweave/) · [Watch the 90-second product recording](https://jsohlot.github.io/dayweave/demo.html) · [Verification record](docs/VERIFICATION.md)
 
 The hosted app includes a clearly labeled synthetic demo. The hosted Google client is configured for the owner’s test account. Other users can run the demo immediately or use their own Google OAuth client and authorized account. Gemini-assisted planning requires your own Gemini API key, entered in the app for the current page session only.
 

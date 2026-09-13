@@ -2,7 +2,18 @@
 
 Executed on September 13, 2026. This record distinguishes real provider calls from synthetic tests. The linked CI run and public demo make the execution evidence inspectable.
 
-## Current implementation and continuous recording
+## Current day-planning recording
+
+The current video is **89.51 seconds**, captured continuously from the verified build of `1ff7136`. The opening and closing position Dayweave as a whole-day planning agent. Sleep, coffee evidence, AI activity, approval, and duplicate prevention lead the sequence; optional nutrition occupies approximately 54.68–75.86 seconds.
+
+- All 1330 captured browser frames retain their original timestamps. The captured stream reports no missing-buffer or capture errors. Full-file decode passed.
+- The initial real Gemini review succeeded on fictional inputs before capture, and the recording shows its activity trace. The later review after the food-goal change did not complete. A subsequent retry returned HTTP 429 with a free-tier daily limit of 20 requests for the selected model. The UI visibly falls back to planning without AI; the nutrition tools and monthly calculator continue to work. This is not presented as a successful second AI review.
+- The recording shows exact approval, a repeat approval, and one sample activity entry. The monthly example shows 8,000 g household carbohydrate and 133.3 g per person per day under its stated assumptions.
+- New continuous narration and 26 ordered caption segments match the revised story. Nutrition is explicitly described as an optional feature.
+- Current MP4 SHA-256: `9fb7e8d29476c43f4e3ed555c341c8f2161c4d7080c1d146787451ebe68ef9d3`.
+- No application logic changed for this video revision. The underlying revision passed 128 tests and its production build in [CI](https://github.com/jsohlot/dayweave/actions/runs/34782627364). Live Google integrations were tested separately as recorded below; no new live Google writes were made for this recording.
+
+## Earlier implementation and 84-second recording
 
 - Release implementation `759e8b3`: all **128 tests across 10 files** and the production build passed after fixing late-wake lunch scheduling, same-account reconnection, and interrupted-workbook recovery. Independent read-only review found no remaining actionable issues in those fixes.
 - Reconnection preserves the exact pending plan for the same verified account, clears data on account changes, and requires renewed approval. Workbook recovery searches before adopting or explicitly authorizing replacement; recovery itself creates no workbook.
@@ -11,7 +22,7 @@ Executed on September 13, 2026. This record distinguishes real provider calls fr
 - MP4 SHA-256: `8247063ab126d77e9d3bd94db772803a8642fbad1567ca749b6ddb03d55876bc`.
 - A separate fresh judge-style checkout of the feature candidate passed installation, 114 tests, build, full dependency audit, 21 local links, 11 built resources, and 18 public URL checks. The final clean-environment and browser results are recorded below; release-specific CI runs are linked there.
 
-## Final clean environment and browser checks
+## Clean environment and browser checks for the earlier 84-second release
 
 Final code/media candidate `c3a90feade808f14c33f0228ee7c73c1a5cfa682` was cloned again into a new directory with a fresh dependency cache. Installation, **128 tests across 10 files**, the production build, and the full dependency audit passed (zero vulnerabilities). All 21 local links and 11 built resources existed. Video and caption bytes in the clean build matched source; all 23 captions had valid ordered timing. The MP4 player reports 84.100 seconds, consistent with the 84.092-second capture timeline.
 

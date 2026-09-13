@@ -1,45 +1,46 @@
 # Dayweave demo
 
-[Watch the continuous product recording](https://jsohlot.github.io/dayweave/demo.html) · [MP4](https://jsohlot.github.io/dayweave/demo.mp4) · [English captions](https://jsohlot.github.io/dayweave/demo.vtt)
+[Watch the product walkthrough](https://jsohlot.github.io/dayweave/demo.html?v=9fb7e8d2) · [MP4](https://jsohlot.github.io/dayweave/demo.mp4?v=9fb7e8d2) · [Captions](https://jsohlot.github.io/dayweave/demo.vtt?v=9fb7e8d2)
 
-**Runtime: 84.09 seconds**, within the two-minute limit.
+**Runtime: 89.51 seconds**, within the two-minute limit.
 
 ## What the video demonstrates
 
-Dayweave helps plan sleep, coffee, and meals around tomorrow’s commitments. Food routine ideas and monthly estimates are optional features within this broader workflow.
+Dayweave prepares your whole day around your commitments: sleep, coffee, lunch breaks, and actions you approve. Nutrition is one optional feature within that workflow. It appears for about 21 seconds after the main planning and approval sequence.
 
-The continuous product walkthrough shows source explanations, a successful real Gemini run on synthetic observations, an explicit protein goal with familiar merchant ideas, the monthly rice calculator, changed inputs and recalculation, exact-action approval, and a retry retaining one activity record. The sample data and simulated Google Calendar/Sheets changes are visibly labeled.
-
-The recording was captured from a separate clean production build of `6de8f84`. Subsequent release fixes add late-wake scheduling protection and Google recovery controls; the recorded normal-day workflow is unchanged. The final release is checked separately with the full suite and browser verification. Live Google reads and approved writes were tested separately and are not presented as part of this synthetic recording; see [verification](VERIFICATION.md).
-
-## Screen sequence
-
-| Approximate time | Working product interaction |
+| Approximate time | Product workflow |
 | --- | --- |
-| 0–11s | Sleep and coffee evidence |
-| 11–20s | Successful Gemini tool trace |
-| 20–48s | Chosen food goal and familiar merchant suggestions |
-| 48–60s | Fictional 10 kg rice estimate, then 5 kg recalculation |
-| 60–75s | Select lunch, review exact event and activity log, confirm |
-| 75–84s | Repeat approval, existing reservation, one activity record |
+| 0–12s | Whole-day overview and three connected apps |
+| 12–23s | Sleep timing and supporting calendar evidence |
+| 23–33s | Coffee purchase patterns and available time |
+| 33–42s | Activity from a successful real Gemini review |
+| 42–54s | Approve lunch, retry, and verify one activity entry |
+| 54–67s | Optional food goal and familiar merchant ideas |
+| 67–76s | Conditional monthly estimate using fictional quantities |
+| 76–90s | Return to the whole-day overview |
 
 ## Demo scope
 
-- Continuous product recording at its original speed.
-- No private inbox contents, credentials, or private calendar titles appear in the recording.
-- Receipt observations do not establish food consumption or dietary deficiency. The monthly example is explicitly fictional and depends on entered quantities, labels, and sharing assumptions.
-- Wearable integration is planned, not connected; provider setup and user authorization are still required.
+This is a continuous recording of the working build from `1ff7136` at its original speed. Sample data and simulated Calendar/Sheets changes are visibly labeled. The initial Gemini review completed before capture; its real activity trace is shown. A later review after choosing the food goal did not complete, and its fallback is visible. A subsequent retry confirmed that the free-tier daily quota was exhausted. Food suggestions and the monthly estimate remain usable without AI.
+
+Live Google integrations were tested separately. Wearable integration remains planned. Receipts do not establish consumption or nutritional deficiency, and the monthly calculation depends on the quantities and sharing assumptions entered.
 
 ## Narration
 
-Tomorrow is packed. Dayweave connects Gmail, Google Calendar, and Google Sheets to make room for coffee, lunch, and rest. This walkthrough uses clearly labeled sample data.
+Tomorrow’s calendar is full, but your day needs more than meetings. Dayweave connects Gmail, Google Calendar, and Google Sheets to make room for rest, coffee, and lunch. This walkthrough uses sample data.
 
-Gemini reviews minimized signals through read-only tools. Scheduling rules validate the times, and this activity trace shows the calls. Each suggestion explains its evidence.
+Start with sleep. Your morning commitments and the routines you choose shape a suggested wake-up and wind-down time. Open the explanation to see the calendar evidence and preferences behind it.
 
-Food ideas start with a goal you choose: include more protein. Recent receipt patterns suggest familiar options at Starbucks and Chipotle, plus a reminder for your next Costco trip. These are menu ideas, not food orders. Ingredients and availability still need checking. Receipts don't prove what someone ate, or whether they're protein deficient. That distinction keeps suggestions useful without pretending to know your entire diet.
+Next, coffee. Receipt purchase times suggest a familiar window, while your calendar helps find an opening. Dayweave keeps purchase history separate from what you actually drank.
 
-The monthly calculator makes assumptions explicit. Ten kilograms of dry rice, shared by two people over thirty days, gives this conditional estimate. Change the amount eaten to five kilograms, and the result halves.
+Gemini helps prioritize the plan using limited planning context. The activity view shows its work, and scheduling checks keep suggested times grounded in your calendar.
 
-Now protect the lunch break. Select it, review the exact calendar event and Sheets activity entry, then confirm. The sample event appears in the schedule. Repeat the approval, and the existing reservation is recognized without creating a duplicate. The activity log keeps one record. Real Google integrations were tested separately; wearable data remains a future connection.
+Then turn a suggestion into an action. Choose lunch, review the exact event and activity entry, and confirm. Repeat the approval, and Dayweave recognizes the existing reservation. There’s still just one activity record.
 
-Video playback, file integrity, and live integration checks are documented in the [verification record](VERIFICATION.md).
+Nutrition is an optional feature within this day-planning workflow. Choose a food goal, and familiar receipt patterns suggest ideas for your coffee break, lunch, or next grocery trip. These are suggestions you can explore, not a diagnosis of your diet.
+
+For a longer view, the monthly calculator estimates one food using quantities and sharing assumptions you enter. It shows a conditional average, not your total intake.
+
+From preparing for sleep to protecting a break, you decide what fits. Dayweave brings the plan together, then acts only with your approval. Google integrations were tested separately; wearable data is a future connection.
+
+[Read the verification record](VERIFICATION.md).
