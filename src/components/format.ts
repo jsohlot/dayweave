@@ -1,0 +1,4 @@
+export function time(value: string, timeZone: string) { try { return new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: '2-digit', timeZone }).format(new Date(value)); } catch { return value; } }
+export function fullTime(value: string, timeZone: string) { try { return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone }).format(new Date(value)); } catch { return value; } }
+export function dateLabel(value: string, options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric' }) { return new Intl.DateTimeFormat('en-US', { ...options, timeZone: 'UTC' }).format(new Date(`${value}T12:00:00Z`)); }
+export function safeUrl(value?: string) { if (!value) return undefined; try { const url = new URL(value); return url.protocol === 'https:' ? url.href : undefined; } catch { return undefined; } }
