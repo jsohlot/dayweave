@@ -23,6 +23,8 @@ A working demo does not prove successful live integrations or predictive accurac
 5. Select proposed actions and review the exact Calendar events before approval.
 6. Create approved events and log outcomes to Sheets. Reruns use stable event identities and recheck Calendar availability; partial failures remain visible.
 
+Optional [food routine ideas and monthly estimates](docs/FOOD-ROUTINES.md) add two ways to explore meals: choose a protein goal for familiar merchant ideas, or enter household quantities and package-label values for a conditional monthly carbohydrate estimate. Receipt quantities are not automatically extracted, and the app does not diagnose deficiency or excess.
+
 ## External apps
 
 | App | Reads | Approved writes |
