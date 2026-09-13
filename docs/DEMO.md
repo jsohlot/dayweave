@@ -2,11 +2,13 @@
 
 [Watch the continuous product recording](https://jsohlot.github.io/dayweave/demo.html) · [MP4](https://jsohlot.github.io/dayweave/demo.mp4) · [English captions](https://jsohlot.github.io/dayweave/demo.vtt)
 
-**Runtime: 84.09 seconds**, within the two-minute limit. This replaces the previous edited screenshot demonstration.
+**Runtime: 84.09 seconds**, within the two-minute limit.
 
 ## What the video demonstrates
 
-A continuous recording of the actual browser app: source explanations, a successful real Gemini run on synthetic observations, an explicit protein goal with familiar merchant ideas, the monthly rice calculator, changed inputs and recalculation, exact-action approval, and a retry retaining one activity record. The sample data and simulated Google Calendar/Sheets changes are visibly labeled.
+Dayweave helps plan sleep, coffee, and meals around tomorrow’s commitments. Food routine ideas and monthly estimates are optional features within this broader workflow.
+
+The continuous product walkthrough shows source explanations, a successful real Gemini run on synthetic observations, an explicit protein goal with familiar merchant ideas, the monthly rice calculator, changed inputs and recalculation, exact-action approval, and a retry retaining one activity record. The sample data and simulated Google Calendar/Sheets changes are visibly labeled.
 
 The recording was captured from a separate clean production build of `6de8f84`. Subsequent release fixes add late-wake scheduling protection and Google recovery controls; the recorded normal-day workflow is unchanged. The final release is checked separately with the full suite and browser verification. Live Google reads and approved writes were tested separately and are not presented as part of this synthetic recording; see [verification](VERIFICATION.md).
 
@@ -21,11 +23,9 @@ The recording was captured from a separate clean production build of `6de8f84`. 
 | 60–75s | Select lunch, review exact event and activity log, confirm |
 | 75–84s | Repeat approval, existing reservation, one activity record |
 
-## Recording boundaries
+## Demo scope
 
-- Captured the browser compositor's continuous frame stream, including scrolling, clicks, dialogs, and results. All 513 captured frames retain their original timestamps; there are no scene cuts, selected screenshot panels, or video speed changes.
-- Static moments remain at their real duration. Letterboxing and captions are the only visual additions.
-- One continuous synthetic narration take uses Sulafat with Gemini 2.5 Flash TTS Preview. Audio playback is slowed uniformly by 2% for a relaxed delivery; the video timing is unchanged.
+- Continuous product recording at its original speed.
 - No private inbox contents, credentials, or private calendar titles appear in the recording.
 - Receipt observations do not establish food consumption or dietary deficiency. The monthly example is explicitly fictional and depends on entered quantities, labels, and sharing assumptions.
 - Wearable integration is planned, not connected; provider setup and user authorization are still required.
@@ -42,9 +42,4 @@ The monthly calculator makes assumptions explicit. Ten kilograms of dry rice, sh
 
 Now protect the lunch break. Select it, review the exact calendar event and Sheets activity entry, then confirm. The sample event appears in the schedule. Repeat the approval, and the existing reservation is recognized without creating a duplicate. The activity log keeps one record. Real Google integrations were tested separately; wearable data remains a future connection.
 
-## Export details
-
-- 1920×1080, 30 fps delivery, H.264/AAC, fast-start MP4.
-- English captions burned into the footer and supplied as a separate WebVTT track.
-- Full-file decode passed; final browser playback and public link checks are recorded in the verification brief.
-- MP4 SHA-256: `8247063ab126d77e9d3bd94db772803a8642fbad1567ca749b6ddb03d55876bc`.
+Video playback, file integrity, and live integration checks are documented in the [verification record](VERIFICATION.md).

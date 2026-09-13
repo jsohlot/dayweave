@@ -30,7 +30,7 @@ export async function generatePlan(options: GenerateOptions): Promise<DayPlan> {
   plan.trace = trace;
   report('planner', 'success', 'Checked calendar gaps, purchase-time evidence, and your routine preferences.');
   if (!options.apiKey?.trim()) {
-    report('gemini', 'skipped', 'Deterministic preview. Gemini was not used.');
+    report('gemini', 'skipped', 'Plan prepared without AI assistance. Gemini was not used.');
     return plan;
   }
   // These payloads contain no account IDs, names, locations, titles, email text,
@@ -96,8 +96,8 @@ export async function generatePlan(options: GenerateOptions): Promise<DayPlan> {
   } catch {
     // Never expose provider response bodies, request headers, URLs, or thrown text.
     plan.aiUsed = false;
-    plan.warnings.push('Gemini review was unavailable or could not be verified. Showing the deterministic plan; Gemini was not used for these suggestions.');
-    report('gemini', 'error', 'Gemini review did not complete. Check the key, model availability, and network, then retry. Deterministic preview is available.');
+    plan.warnings.push('Gemini review was unavailable or could not be verified. Showing a plan based on your calendar and routines, without Gemini assistance.');
+    report('gemini', 'error', 'Gemini review did not complete. Check the key, model availability, and network, then retry. Planning without AI is still available.');
     return plan;
   }
 }
