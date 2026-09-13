@@ -99,8 +99,14 @@ function receipt(message: Message, accountEmail?: string): Receipt | null {
   const match = text.match(/(?:purchased\s+at|purchase(?:\s+(?:date|time))?|ordered\s+at|order\s+placed|transaction(?:\s+(?:date|time))?)\s*[:\-]?\s*(\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:?\d{2}))/i);
   const timestamp = match ? instant(match[1].replace(' ','T')) : null;
   const purchasedAt = timestamp?.isValid && timestamp.toMillis() <= received.toMillis() + 300000 ? timestamp.toISO() : null;
+  // Match an actual sender mailbox domain, never a display name or body mention.
+  // This is a source hint, not proof that an email or purchase is authentic.
+  const from = header('From').trim();
+  const mailbox = (from.match(/<([^<>]+)>$/)?.[1] ?? from).trim();
+  const domain = mailbox.match(/^[^\s<>@]+@([a-z0-9.-]+)$/i)?.[1]?.toLowerCase();
+  const merchantKey = (['starbucks', 'chipotle', 'costco'] as const).find(key => domain === `${key}.com` || domain?.endsWith(`.${key}.com`));
   const merchant = (header('From').replace(/<[^>]+>/g,'').replace(/"/g,'').trim() || 'Receipt sender').slice(0,120);
-  return {id:message.id, merchant, category:coffee ? 'coffee' : meal ? 'meal' : 'other', purchasedAt, receivedAt:received.toISO()!, items:[], sourceUrl:accountEmail ? `https://mail.google.com/mail/?authuser=${encodeURIComponent(accountEmail)}#all/${encodeURIComponent(message.id)}` : undefined, timeSource:purchasedAt ? 'receipt' : 'email'};
+  return {id:message.id, merchant, merchantKey, category:coffee ? 'coffee' : meal ? 'meal' : 'other', purchasedAt, receivedAt:received.toISO()!, items:[], sourceUrl:accountEmail ? `https://mail.google.com/mail/?authuser=${encodeURIComponent(accountEmail)}#all/${encodeURIComponent(message.id)}` : undefined, timeSource:purchasedAt ? 'receipt' : 'email'};
 }
 
 const preferenceLimits: Record<string, [number, number]> = {sleepHours:[4,12], windDownMinutes:[0,180],sleepLatencyMinutes:[0,120],morningMinutes:[0,240],commuteMinutes:[0,240],lunchMinutes:[10,120]};
@@ -113,6 +119,7 @@ function cleanPreferences(input: Record<string, unknown>): Partial<Preferences> 
   for (const key of ['defaultWakeTime','coffeeTime','lunchTime']) if (typeof input[key] === 'string' && /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(input[key])) output[key] = input[key];
   if (typeof input.timeZone === 'string' && DateTime.now().setZone(input.timeZone).isValid) output.timeZone = input.timeZone;
   for (const key of ['name','dietaryPreferences']) if (typeof input[key] === 'string') output[key] = input[key].slice(0,1000);
+  if (input.foodGoal === 'none' || input.foodGoal === 'protein') output.foodGoal = input.foodGoal;
   return output;
 }
 
@@ -208,7 +215,7 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
     await identity();
     const ids: string[] = [];let pageToken: string | undefined;
     for (let page = 0; page < 3 && ids.length < 30; page++) {
-      const query = new URLSearchParams({q:'newer_than:30d {receipt "order confirmation" "order placed"} {coffee cafe latte espresso starbucks restaurant lunch doordash "uber eats" grubhub meal}',maxResults:String(30 - ids.length),...(pageToken ? {pageToken}: {})});
+      const query = new URLSearchParams({q:'newer_than:30d {receipt "order confirmation" "order placed"} {coffee cafe latte espresso starbucks restaurant lunch chipotle costco doordash "uber eats" grubhub meal}',maxResults:String(30 - ids.length),...(pageToken ? {pageToken}: {})});
       const result = await request<{messages?:{id:string}[];nextPageToken?:string}>(`${GMAIL}?${query}`,'gmail');
       ids.push(...(result.messages || []).map(message => message.id).filter(id => !ids.includes(id)).slice(0,30-ids.length));
       pageToken = result.nextPageToken;if (!pageToken) break;
@@ -291,10 +298,10 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
     },
     async savePreferences(preferences) {
       const cleaned = cleanPreferences(preferences as unknown as Record<string,unknown>);
-      if (Object.keys(cleaned).length !== 12) throw new Error('Review preference values before saving.');
+      if (Object.keys(cleaned).length !== (preferences.foodGoal === undefined ? 12 : 13)) throw new Error('Review preference values before saving.');
       await locked(await identity(),async () => {
         const id = await workbook(true);
-        await request(`${valuesUrl(id!,'Preferences!A1:B12')}?valueInputOption=RAW`,'sheets','PUT',{values:Object.entries(cleaned)});
+        await request(`${valuesUrl(id!,'Preferences!A1:B13')}?valueInputOption=RAW`,'sheets','PUT',{values:[...Object.entries(cleaned), ...(cleaned.foodGoal === undefined ? [['', '']] : [])]});
       });
     },
     async applyActions(plan,actionIds,onTrace) {

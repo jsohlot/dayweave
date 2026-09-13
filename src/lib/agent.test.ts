@@ -117,3 +117,23 @@ describe('Gemini 3.6 request compatibility', () => {
     expect(returnedSignature).toBe('opaque-signature');
   });
 });
+
+it('keeps merchant food ideas and receipt contents outside every Gemini tool response', async () => {
+ const o = opts();
+ o.preferences = { ...o.preferences, foodGoal: 'protein', dietaryPreferences: 'DO_NOT_SEND_DIET' };
+ const original = o.provider.loadSources;
+ o.provider.loadSources = async (...args) => {
+  const data = await original(...args);
+  data.receipts = data.receipts.map(r => ({ ...r, items: ['DO_NOT_SEND_ITEMS'], sourceUrl: 'https://do-not-send.test/private' }));
+  return data;
+ };
+ const bodies: string[] = [];
+ vi.stubGlobal('fetch', async (_url: string, init: RequestInit) => {
+  bodies.push(String(init.body));
+  return bodies.length === 1 ? answer(['read_validated_plan', 'read_receipt_patterns', 'read_preferences'].map(name => ({ functionCall: { name, args: {} } }))) : answer([{ text: '{"focus":"lunch","evidenceIds":["pref-lunch"]}' }]);
+ });
+ const result = await generatePlan({ ...o, apiKey: 'test' });
+ expect(result.mealIdeas?.ideas.length).toBeGreaterThan(0);
+ expect(result.aiUsed).toBe(true);
+ expect(bodies.join('')).not.toMatch(/Starbucks|Chipotle|Costco|DO_NOT_SEND|do-not-send|menuUrl|foodGoal/);
+});

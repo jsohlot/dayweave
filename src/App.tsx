@@ -7,6 +7,7 @@ import { generatePlan } from './lib/agent';
 import { connectGoogle, loadGoogleIdentity } from './lib/google';
 import { ApprovalDialog } from './components/ApprovalDialog';
 import { Modal } from './components/Modal';
+import { MealIdeasView } from './components/MealIdeasView';
 import { PreferencesPanel } from './components/PreferencesPanel';
 import { PlanCardView } from './components/PlanCardView';
 import { dateLabel, fullTime, safeUrl, time } from './components/format';
@@ -95,6 +96,7 @@ export default function App() {
     <div className="dashboard-grid"><section className="plan-column" aria-label="Your suggested plan">
      <div className="plan-intro"><div className="intro-spark"><Sparkles size={20}/></div><div><h2>{busy ? 'Finding your rhythm…' : plan?.headline || 'A thoughtful day starts here.'}</h2><p>{busy ? 'Looking at commitments and routines, then making space around them.' : plan?.summary || 'Connect your sources or refresh the plan to begin.'}</p></div></div>
      {busy && !plan ? <div className="skeletons" aria-label="Preparing your plan" aria-busy="true">{[1, 2, 3].map(n => <div className="skeleton-card" key={n}><span/><span/><span/></div>)}</div> : plan?.cards.map(card => <PlanCardView key={card.id} card={card} plan={plan} selected={!!card.actionId && selected.includes(card.actionId)} disabled={totalBusy} onSelect={() => { if (card.actionId) setSelected(old => old.includes(card.actionId!) ? old.filter(id => id !== card.actionId) : [...old, card.actionId!]); }}/>) }
+     {plan?.mealIdeas && <MealIdeasView ideas={plan.mealIdeas} plan={plan} onEdit={() => setPanel('settings')} disabled={totalBusy}/>}
      {plan?.warnings.map((warning, index) => <p className="plan-warning" key={index}><CircleHelp size={15}/>{warning}</p>)}
      {plan && <div className="approval-bar"><div><span className="approval-count">{selected.length}</span><span><strong>{selected.length ? 'Small changes. A calmer day.' : 'Choose what works for you.'}</strong><small>{selected.length} {selected.length === 1 ? 'suggestion' : 'suggestions'} selected · review before adding</small></span></div><button className="button primary" disabled={!selected.length || totalBusy} onClick={() => setReview(true)}>Review & add<ArrowRight size={16}/></button></div>}
      <div className="care-note"><ShieldCheck size={15}/><span>You’re in charge. Dayweave only adds events after you review and confirm.</span></div>

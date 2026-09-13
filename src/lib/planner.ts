@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { buildMealIdeas } from './mealIdeas';
 import type { CalendarEvent, DayPlan, Evidence, Mode, PlanAction, PlanCard, Preferences, Receipt, SourceData } from '../types';
 
 export function localTime(date: string, time: string, zone: string): DateTime {
@@ -10,6 +11,7 @@ export function localTime(date: string, time: string, zone: string): DateTime {
   return value.getPossibleOffsets().sort((a, b) => a.toMillis() - b.toMillis())[0] ?? value;
 }
 export function validatePreferences(date: string, p: Preferences): void {
+  if (p.foodGoal !== undefined && p.foodGoal !== 'none' && p.foodGoal !== 'protein') throw new Error('Choose a supported food goal.');
   for (const time of [p.defaultWakeTime, p.coffeeTime, p.lunchTime]) localTime(date, time, p.timeZone);
   const bounds: [number, number, number][] = [[p.sleepHours, 4, 12], [p.windDownMinutes, 0, 180], [p.sleepLatencyMinutes, 0, 120], [p.morningMinutes, 0, 240], [p.commuteMinutes, 0, 240], [p.lunchMinutes, 10, 120]];
   if (bounds.some(([n, min, max]) => !Number.isFinite(n) || n < min || n > max)) throw new Error('Check your sleep target and routine durations. One value is outside the supported range.');
@@ -110,5 +112,5 @@ export function buildPlan(date: string, p: Preferences, sources: SourceData, mod
   cards.push({ id: 'lunch', kind: 'lunch', title: 'Give lunch a little space', timeLabel: lunch ? fmt(lunch) : 'No clear gap', summary: lunchConflicts.length ? 'Your usual lunch overlaps a commitment.' : lunch ? 'There is room to pause for lunch.' : 'The middle of your day is fully occupied.', reasoning: lunchReason, evidenceIds: lunchIds, confidence: lunch ? 'preference' : 'limited', actionId: lunch ? add('lunch', 'Lunch break', lunchReason, lunch, p.lunchMinutes, lunchIds) : undefined });
   if (!coffee) warnings.push('No conflict-free morning coffee slot was found.');
   if (!lunch) warnings.push('No conflict-free lunch slot was found.');
-  return { id: `plan-${date}-${Date.now()}`, date, timeZone: p.timeZone, generatedAt: new Date().toISOString(), mode, headline: 'A little preparation. A calmer tomorrow.', summary: 'Your preferences, calendar openings, and available receipt timing shape these suggestions. Choose what you want to reserve.', cards, actions, evidence, events, trace: [], warnings, aiUsed: false };
+  return { id: `plan-${date}-${Date.now()}`, date, timeZone: p.timeZone, generatedAt: new Date().toISOString(), mode, headline: 'A little preparation. A calmer tomorrow.', summary: 'Your preferences, calendar openings, and available receipt timing shape these suggestions. Choose what you want to reserve.', cards, actions, evidence, events, trace: [], warnings, aiUsed: false, mealIdeas: buildMealIdeas(date, p, sources.receipts) };
 }

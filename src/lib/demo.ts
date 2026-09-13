@@ -18,8 +18,14 @@ export function createDemoProvider(scenario: 'busy' | 'early' | 'sparse' = 'busy
     const events: CalendarEvent[] = scenario === 'sparse' ? [] : scenario === 'early' ? [ev('early', 'Early team handoff', '06:30', '07:15'), ev('lunch', 'Project check-in', '12:00', '12:45'), ev('walk', 'Evening walk', '17:30', '18:00')] : [ev('standup', 'Team check-in', '09:30', '10:00'), ev('review', 'Design review', '11:30', '12:30'), ev('workshop', 'Planning workshop', '12:30', '13:15'), ev('focus', 'Focus time', '14:00', '15:30')];
     const receipts: Receipt[] = scenario === 'sparse' ? [] : [2, 4, 6, 8, 10].map((days, i) => {
       const t = localTime(date, '09:00', p.timeZone).minus({ days }).plus({ minutes: [10, 0, 15, 5, 10][i] });
-      return { id: `demo-receipt-${i}`, merchant: 'Juniper Coffee (sample)', category: 'coffee', purchasedAt: t.toISO(), receivedAt: t.plus({ minutes: 7 }).toISO()!, items: ['Coffee (synthetic receipt)'], timeSource: 'receipt' };
+      return { id: `demo-receipt-${i}`, merchant: scenario === 'busy' ? 'Starbucks (synthetic)' : 'Juniper Coffee (sample)', ...(scenario === 'busy' ? { merchantKey: 'starbucks' as const } : {}), category: 'coffee', purchasedAt: t.toISO(), receivedAt: t.plus({ minutes: 7 }).toISO()!, items: ['Coffee (synthetic receipt)'], timeSource: 'receipt' };
     });
+    if (scenario === 'busy') {
+      for (const [index, key] of (['chipotle', 'costco'] as const).entries()) {
+        const t = localTime(date, '12:00', p.timeZone).minus({ days: index + 2 });
+        receipts.push({ id: `demo-food-${key}`, merchant: `${key} (synthetic)`, merchantKey: key, category: key === 'chipotle' ? 'meal' : 'other', purchasedAt: t.toISO(), receivedAt: t.plus({ minutes: 5 }).toISO()!, items: [], timeSource: 'receipt' });
+      }
+    }
     return { events: [...events, ...created.map(e => ({ ...e }))], receipts, warnings: ['Synthetic demo data. Actions and preferences stay in this demo session only.'] };
   }
   return {

@@ -290,3 +290,28 @@ describe('browser OAuth', () => {
     await expect(connectGoogle('client.apps.googleusercontent.com')).rejects.toThrow(/closed/i);
   });
 });
+
+describe('food routine read and persistence boundaries', () => {
+ it('round-trips explicit food goals in a range large enough for all preferences', async () => {
+  const provider = createGoogleProvider('test-memory-token');
+  await provider.savePreferences({ ...preferences, foodGoal: 'protein' });
+  expect(await provider.readPreferences()).toMatchObject({ foodGoal: 'protein' });
+  const put = calls.find(c => c.method === 'PUT' && decodeURIComponent(c.url.pathname).includes('Preferences'))!;
+  const end = Number(decodeURIComponent(put.url.pathname).match(/B(\d+)$/)?.[1]);
+  expect(end).toBeGreaterThanOrEqual(put.body?.values.length);
+  await provider.savePreferences({ ...preferences, foodGoal: 'none' });
+  expect(await provider.readPreferences()).toMatchObject({ foodGoal: 'none' });
+  await provider.savePreferences(preferences);
+  expect((await provider.readPreferences())?.foodGoal).toBeUndefined();
+  savedPreferences = [['foodGoal', 'diagnose']];
+  expect(await provider.readPreferences()).toEqual({});
+ });
+ it('matches brand identity through sender domains, not display-name or body mentions', async () => {
+  const senders = ['Starbucks <offers@evil.test>', 'Receipt <orders@mail.starbucks.com>', 'Costco <orders@costco.com.evil.test>', 'Receipt <orders@costco.com>', 'Chipotle <orders@chipotle.com>'];
+  messages = senders.map((from, i) => ({ id: String(i), internalDate: '1789300800000', payload: { headers: [{ name: 'Subject', value: 'Order receipt' }, { name: 'From', value: from }], body: { data: btoa('Your purchase at Starbucks Costco Chipotle') } } }));
+  const result = await createGoogleProvider('test-memory-token').loadSources(plan.date, preferences);
+  expect(result.receipts.map(r => r.merchantKey)).toEqual([undefined, 'starbucks', undefined, 'costco', 'chipotle']);
+  const query = calls.find(c => c.url.pathname.endsWith('/messages'))?.url.searchParams.get('q');
+  expect(query).toMatch(/costco/); expect(query).toMatch(/chipotle/);
+ });
+});

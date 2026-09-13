@@ -65,3 +65,17 @@ it('keeps live source failures visible without substituting synthetic data', asy
  expect(screen.queryByRole('button', { name: 'Review & add' })).toBeNull();
  expect(screen.queryByLabelText('Demo scenario')).toBeNull();
 });
+
+it('keeps food ideas opt-in, renders evidence after choosing a goal, and never silently saves preferences', async () => {
+ render(<App/>);
+ await screen.findByText('Keep your morning familiar');
+ expect(screen.queryByText('A little protein, in familiar places.')).toBeNull();
+ fireEvent.click(screen.getByRole('button', { name: 'Your routines' }));
+ fireEvent.change(screen.getByLabelText('Food goal'), { target: { value: 'protein' } });
+ fireEvent.click(screen.getByRole('button', { name: 'Use for this plan' }));
+ await screen.findByText('A little protein, in familiar places.');
+ expect(screen.getByRole('link', { name: /Starbucks menu/i }).getAttribute('href')).toBe('https://www.starbucks.com/discover/protein-drinks/');
+ expect(screen.getByRole('link', { name: /Chipotle menu/i })).toBeTruthy();
+ expect(harness.providers.at(-1)?.savePreferences).not.toHaveBeenCalled();
+ expect(harness.providers.at(-1)?.applyActions).not.toHaveBeenCalled();
+});
