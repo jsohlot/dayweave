@@ -165,3 +165,20 @@ it('clears account data and AI consent when reconnect selects a different accoun
  expect((screen.getByLabelText('Gemini API key') as HTMLInputElement).value).toBe('');
  expect((within(screen.getByRole('dialog')).getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
 });
+
+it('requires a separate explicit confirmation before resetting missing-workbook recovery', async () => {
+ const live = await liveProvider('account-a');
+ const recover = vi.fn(async (replace = false) => replace ? 'reset' : 'confirmation_required');
+ Object.assign(live, { recoverWorkbook: recover });
+ vi.spyOn(live, 'savePreferences');
+ await connectLive(live);
+ fireEvent.click(screen.getByRole('button', { name: 'Connection' }));
+ fireEvent.click(screen.getByRole('button', { name: 'Recover workbook' }));
+ await screen.findByText(/could create an extra workbook/i);
+ expect(recover.mock.calls).toEqual([[false]]);
+ fireEvent.click(screen.getByRole('button', { name: 'Confirm replacement on next save' }));
+ await screen.findAllByText(/next approved save or action/i);
+ expect(recover.mock.calls).toEqual([[false], [true]]);
+ expect(live.savePreferences).not.toHaveBeenCalled();
+ expect(live.applyActions).not.toHaveBeenCalled();
+});

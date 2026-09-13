@@ -327,3 +327,46 @@ it('exposes only the verified cached account subject through token expiry', asyn
  provider.disconnect();
  expect(provider.getAccountId?.()).toBeUndefined();
 });
+
+it('requires explicit recovery after an initial workbook request never reaches Google', async () => {
+ const originalFetch = fetch;
+ vi.stubGlobal('fetch', vi.fn((url: string, init?: RequestInit) => String(url).endsWith('/spreadsheets') ? Promise.reject(new TypeError('Offline before send')) : originalFetch(url,init)));
+ const provider = createGoogleProvider('test-memory-token');
+ await expect(provider.savePreferences(preferences)).rejects.toThrow();
+ vi.stubGlobal('fetch', originalFetch);
+ await expect(provider.savePreferences(preferences)).rejects.toThrow(/unconfirmed/i);
+ expect(await provider.recoverWorkbook?.()).toBe('confirmation_required');
+ expect(workbooks).toHaveLength(0);
+ expect(await provider.recoverWorkbook?.(true)).toBe('reset');
+ expect(workbooks).toHaveLength(0);
+ await provider.savePreferences(preferences);
+ expect(workbooks).toHaveLength(1);
+});
+it('adopts a found pending workbook even when replacement was confirmed', async () => {
+ lostWorkbookResponse = true;
+ const provider = createGoogleProvider('test-memory-token');
+ await expect(provider.savePreferences(preferences)).rejects.toThrow();
+ expect(await provider.recoverWorkbook?.(true)).toBe('recovered');
+ await provider.savePreferences(preferences);
+ expect(workbooks).toHaveLength(1);
+ expect(provider.getSpreadsheetUrl()).toContain('sheet-synthetic-account-a');
+});
+it('refuses recovery when multiple pending workbooks match', async () => {
+ lostWorkbookResponse = true;
+ const provider = createGoogleProvider('test-memory-token');
+ await expect(provider.savePreferences(preferences)).rejects.toThrow();
+ workbooks.push({ ...workbooks[0], id: 'second-sheet' });
+ await expect(provider.recoverWorkbook?.(true)).rejects.toThrow(/multiple|ambiguous/i);
+ expect([...storage.keys()].some(key => key.endsWith(':pending'))).toBe(true);
+});
+
+it('leaves another account pending marker untouched during recovery', async () => {
+ lostWorkbookResponse = true;
+ await expect(createGoogleProvider('test-memory-token').savePreferences(preferences)).rejects.toThrow();
+ const pendingBefore = [...storage.entries()];
+ account = 'synthetic-account-b';
+ const callsBefore = calls.length;
+ expect(await createGoogleProvider('test-memory-token').recoverWorkbook?.(true)).toBe('none');
+ expect([...storage.entries()]).toEqual(pendingBefore);
+ expect(calls.slice(callsBefore).every(call => call.method === 'GET' && !call.url.pathname.endsWith('/files'))).toBe(true);
+});

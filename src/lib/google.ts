@@ -170,11 +170,8 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
       const pendingKey = `${sheetKey(subject)}:pending`;
       const pending = storageRead(pendingKey);
       if (pending) {
-        if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(pending)) throw new Error('The saved workbook recovery marker is invalid. Review browser storage before retrying.');
-        const query = new URLSearchParams({q:`name = 'Dayweave (${pending})' and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false`,fields:'files(id,name),nextPageToken',pageSize:'100',spaces:'drive'});
-        const found = await request<{files?:{id:string}[];nextPageToken?:string}>(`https://www.googleapis.com/drive/v3/files?${query}`,'sheets');
-        if (found.nextPageToken || found.files?.length !== 1) throw new Error('The previous workbook creation is still unconfirmed. Wait briefly and retry so Dayweave can find it; no second workbook will be created.');
-        spreadsheetId = found.files[0].id;
+        spreadsheetId = await findPendingWorkbook(pending);
+        if (!spreadsheetId) throw new Error('The previous workbook creation is still unconfirmed. Wait briefly and retry, or use Recover workbook in Connection settings to review replacement.');
       } else {
         const attempt = crypto.randomUUID();
         storageWrite(pendingKey,attempt);
@@ -193,6 +190,13 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
       if (storageRead(sheetKey(subject)) === spreadsheetId) storageRemove(pendingKey);
     }
     return spreadsheetId;
+  }
+  async function findPendingWorkbook(pending: string): Promise<string | undefined> {
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(pending)) throw new Error('The saved workbook recovery marker is invalid. Review browser storage before retrying.');
+    const query = new URLSearchParams({q:`name = 'Dayweave (${pending})' and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false`,fields:'files(id,name),nextPageToken',pageSize:'100',spaces:'drive'});
+    const found = await request<{files?:{id:string}[];nextPageToken?:string}>(`https://www.googleapis.com/drive/v3/files?${query}`,'sheets');
+    if (found.nextPageToken || (found.files?.length || 0) > 1) throw new Error('Workbook recovery is ambiguous: multiple possible workbooks were found. Review them in Google Drive before retrying.');
+    return found.files?.[0]?.id;
   }
   const valuesUrl = (id:string,range:string) => `${SHEETS}/${encodeURIComponent(id)}/values/${encodeURIComponent(range)}`;
   async function getActivity(): Promise<ActivityRow[]> {
@@ -279,6 +283,24 @@ export function createGoogleProvider(initialToken: string, expiresAt = Number.PO
   return {
     mode:'live',
     getAccountId: () => accountId,
+    async recoverWorkbook(allowReplacement = false) {
+      const subject = await identity();
+      return locked(subject, async () => {
+        const key = sheetKey(subject), pendingKey = `${key}:pending`;
+        const pending = storageRead(pendingKey);
+        if (spreadsheetId || storageRead(key) || !pending) return 'none' as const;
+        const found = await findPendingWorkbook(pending);
+        if (found) {
+          spreadsheetId = found; storageWrite(key, found);
+          if (storageRead(key) === found) storageRemove(pendingKey);
+          return 'recovered' as const;
+        }
+        if (!allowReplacement) return 'confirmation_required' as const;
+        storageRemove(pendingKey);
+        if (storageRead(pendingKey)) throw new Error('Browser storage could not clear the recovery marker. No replacement has been authorized.');
+        return 'reset' as const;
+      });
+    },
     getConnections: () => { if (Date.now() >= expiresAt) {token='';connections.forEach(c => {c.connected=false;c.detail='Reconnect Google';});}return connections.map(connection => ({...connection})); },
     async loadSources(date,preferences,onTrace) {
       const day = DateTime.fromISO(date,{zone:preferences.timeZone}).startOf('day');
